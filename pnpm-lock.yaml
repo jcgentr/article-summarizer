@@ -41,6 +41,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      groq-sdk:
+        specifier: ^0.12.0
+        version: 0.12.0
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
@@ -1479,6 +1482,9 @@ packages:
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
+
+  groq-sdk@0.12.0:
+    resolution: {integrity: sha512-X8ogAHYJ0pfDFAzTxSmfTCac0GznA1Ypd6t8to2SL236FY2tPSOZrOhIBAobPx+oey/6WI96MbvT6VvvjCDTCQ==}
 
   has-bigints@1.0.2:
     resolution: {integrity: sha512-tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ==}
@@ -4000,6 +4006,18 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   graphemer@1.4.0: {}
+
+  groq-sdk@0.12.0:
+    dependencies:
+      '@types/node': 18.19.67
+      '@types/node-fetch': 2.6.12
+      abort-controller: 3.0.0
+      agentkeepalive: 4.5.0
+      form-data-encoder: 1.7.2
+      formdata-node: 4.4.1
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
 
   has-bigints@1.0.2: {}
 

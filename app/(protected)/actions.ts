@@ -75,7 +75,11 @@ export async function createArticleSummary(
 
     const wordCount = article.textContent.trim().split(/\s+/).length;
     const cleanContent = article.textContent.replace(/\s+/g, " ").trim();
-    const result = await generateSummaryAndTags(cleanContent, wordCount);
+    const result = await generateSummaryAndTags(
+      cleanContent,
+      wordCount,
+      "groq"
+    );
 
     // Insert into articles table
     const { data: newArticle, error: articleError } = await supabase

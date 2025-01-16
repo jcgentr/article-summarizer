@@ -1,26 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
+import Groq from "groq-sdk";
 import config from "@/app/config";
 
 const TOKEN_LIMIT = 50000; // ~37,500 words
 
-export async function generateSummaryAndTags(
-  content: string,
-  wordCount: number
-) {
-  // Rough token estimation (1 token ≈ 0.75 words)
-  const estimatedTokens = Math.ceil(wordCount / 0.75);
-
-  if (estimatedTokens > TOKEN_LIMIT) {
-    throw new Error(
-      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`
-    );
-  }
-
-  const client = new Anthropic({
-    apiKey: config.anthropicApiKey,
-  });
-
-  const messageText = `Please provide a concise summary of this article:
+function createMessageText(content: string) {
+  return `Please provide a concise summary of this article:
 
   ${content}
 
@@ -38,36 +23,84 @@ export async function generateSummaryAndTags(
       "tags": ["artificial intelligence", "healthcare", "medical technology", "machine learning"]
   }
   `;
+}
+
+export async function generateSummaryAndTags(
+  content: string,
+  wordCount: number,
+  provider: "anthropic" | "groq" = "anthropic"
+) {
+  // Rough token estimation (1 token ≈ 0.75 words)
+  const estimatedTokens = Math.ceil(wordCount / 0.75);
+
+  if (estimatedTokens > TOKEN_LIMIT) {
+    throw new Error(
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`
+    );
+  }
+
+  const messageText = createMessageText(content);
 
   try {
-    const message = await client.messages.create({
-      // model: "claude-3-5-sonnet-20241022",
-      model: "claude-3-5-haiku-20241022",
-      max_tokens: 500,
-      temperature: 0,
-      system:
-        "You are a professional summarizer. Provide clear, concise summaries while maintaining key information.",
-      messages: [
-        {
-          role: "user",
-          content: messageText,
-        },
-      ],
-    });
+    let responseText: string = "";
 
-    const responseText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+    if (provider === "groq") {
+      console.log("GROQ...");
+      const groq = new Groq({
+        apiKey: config.groqApiKey,
+      });
+
+      const chatCompletion = await groq.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a professional summarizer. Provide clear, concise summaries while maintaining key information.",
+          },
+          {
+            role: "user",
+            content: messageText,
+          },
+        ],
+        model: "llama-3.3-70b-versatile",
+        temperature: 0,
+        max_tokens: 500,
+        response_format: { type: "json_object" },
+      });
+
+      responseText = chatCompletion.choices[0]?.message?.content ?? "";
+    } else {
+      console.log("CLAUDE HAIKU...");
+      const client = new Anthropic({
+        apiKey: config.anthropicApiKey,
+      });
+
+      const message = await client.messages.create({
+        model: "claude-3-5-haiku-20241022",
+        max_tokens: 500,
+        temperature: 0,
+        system:
+          "You are a professional summarizer. Provide clear, concise summaries while maintaining key information.",
+        messages: [
+          {
+            role: "user",
+            content: messageText,
+          },
+        ],
+      });
+
+      responseText =
+        message.content[0].type === "text" ? message.content[0].text : "";
+    }
+    console.log({ responseText, type: typeof responseText });
     const responseData = JSON.parse(responseText);
 
-    // Create and return summary object
-    const result = {
+    return {
       summary: responseData.summary,
       tags: Array.isArray(responseData.tags)
         ? responseData.tags.join(",")
         : responseData.tags,
     };
-
-    return result;
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(`Error generating summary: ${error.message}`);

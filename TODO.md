@@ -16,20 +16,25 @@
 - [ ] virtualize article list (https://tanstack.com/virtual/latest)
   - [ ] add infinite scrolling with API fetching
 - [ ] add print button
-- [ ] add feedback button and form
 - [ ] add OG image next to title
-- [ ] add publish date
-- [ ] improve login and signup flow (verify email not intuitive)
-- [ ] offer Github and Google sign in providers
 - [ ] offer forgot password option
-- [ ] improve slogan like "Get the gist of a web article"
 - [ ] investigate why so many summaries are not parsed
+- [ ] turn supabase email verification back on
+  - [ ] Email rate-limits and restrictions (see Supabase SMTP docs)
+- [ ] improve login and signup flow (verify email not intuitive)
+  - [ ] let user know if account exists or not?
 - [ ] initial modal for demo and free users telling them of usage limits
-- [ ] link to Chrome extension in user menu
-
+- [ ] email notifications on landing page for updates
+- [ ] offer Github and Google sign in providers
 - [ ] try out deepseek API
-- [ ] develop and deploy landing page
 
+- [ ] improve Chrome extension styling to match main app
+- [ ] add publish date
+- [ ] link to Chrome extension in user menu
+- [ ] test full app (Billing link not working on icloud user)
+
+- [x] add feedback button and form
+- [x] develop and deploy landing page
 - [x] add summary count and limit and plan type in user account menu
 - [x] fix broken production chrome extension
 - [x] create user_metadata entries for existing users
@@ -68,14 +73,13 @@
 
 # Pre-launch
 
-- [ ] develop demo app on subdomain
-- [ ] develop landing page with link to chrome extension (no subdomain)
-- [ ] put main app on app subdomain
 - [ ] read and complete: https://docs.stripe.com/billing/testing
-- [ ] upgrade accounts for Vercel and Supabase
 
-- [ ] Link Mercury account to Stripe
-
+- [x] upgrade accounts for Vercel and Supabase
+- [x] develop demo app on subdomain
+- [x] put main app on app subdomain
+- [x] Link Mercury account to Stripe
+- [x] develop landing page with link to chrome extension (no subdomain)
 - [x] setup business bank account (Steph recommends Mercury)
 - [x] setup Stripe billing and subscriptions (be able to cancel easily)
 - [x] decide on pricing

@@ -47,3 +47,12 @@ export interface HNStory {
 export interface ArticleWithRank extends Article {
   rank: number;
 }
+
+export type Feedback = {
+  id: string;
+  user_id: string;
+  user_email: string;
+  category: string;
+  message: string;
+  created_at: string;
+};

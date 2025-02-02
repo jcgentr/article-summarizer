@@ -1,6 +1,13 @@
 "use client";
 
-import { CreditCard, LogOut, Settings, Sparkles, User } from "lucide-react";
+import {
+  CreditCard,
+  LogOut,
+  MessageSquare,
+  Settings,
+  Sparkles,
+  User,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +27,7 @@ import { PlanType } from "@/app/(protected)/types";
 import Link from "next/link";
 import { useChromeExtension } from "@/lib/hooks/useChromeExtension";
 import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
+import { FeedbackForm } from "./FeedbackForm";
 
 interface NavUserProps {
   email: string;
@@ -121,6 +129,17 @@ export function NavUser({
             <DropdownMenuSeparator />
           </>
         )}
+        <DropdownMenuGroup>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <FeedbackForm>
+              <div className="flex items-center cursor-pointer gap-2">
+                <MessageSquare className="h-4 w-4 mr-1 flex-shrink-0" />
+                Give Feedback
+              </div>
+            </FeedbackForm>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
         <form action={logout}>
           <DropdownMenuItem
             asChild

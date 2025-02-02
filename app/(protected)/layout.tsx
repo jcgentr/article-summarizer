@@ -1,3 +1,4 @@
+import { FeedbackButton } from "@/components/FeedbackButton";
 import NavBar from "@/components/NavBar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -18,6 +19,7 @@ export default async function ProtectedLayout({
     <>
       <NavBar user={data.user} />
       {children}
+      <FeedbackButton />
     </>
   );
 }

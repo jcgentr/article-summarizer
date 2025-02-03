@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Chrome,
   CreditCard,
   LogOut,
   MessageSquare,
@@ -130,9 +131,22 @@ export function NavUser({
           </>
         )}
         <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link
+              href="https://chromewebstore.google.com/detail/gistr/ncjimfkmindojmhmempanidjnlfjhfoo"
+              target="_blank"
+              className="flex items-center cursor-pointer"
+            >
+              <Chrome className="h-5 w-5 mr-1 flex-shrink-0" />
+              Chrome Extension
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <FeedbackForm>
-              <div className="flex items-center cursor-pointer gap-2">
+              <div className="w-full flex items-center cursor-pointer gap-2">
                 <MessageSquare className="h-4 w-4 mr-1 flex-shrink-0" />
                 Give Feedback
               </div>

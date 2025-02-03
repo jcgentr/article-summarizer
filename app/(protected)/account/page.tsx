@@ -134,13 +134,18 @@ export default async function AccountPage({
               {new Date(metadata.billing_cycle_start).toLocaleDateString()}
             </p>
           </div>
-          {metadata.stripe_customer_id && (
-            <form action={createPortalSession}>
-              <Button type="submit" variant="outline">
-                Manage Billing
-              </Button>
-            </form>
-          )}
+          <div className="flex justify-between">
+            {metadata.stripe_customer_id && (
+              <form action={createPortalSession}>
+                <Button type="submit" variant="outline">
+                  Manage Billing
+                </Button>
+              </form>
+            )}
+            <Link href="/" passHref>
+              <Button>Return to Homepage</Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

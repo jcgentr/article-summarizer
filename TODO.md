@@ -28,11 +28,11 @@
 - [ ] offer Github and Google sign in providers
 - [ ] try out deepseek API
 
-- [ ] improve Chrome extension styling to match main app
 - [ ] add publish date
-- [ ] link to Chrome extension in user menu
-- [ ] test full app (Billing link not working on icloud user)
+- [ ] test full app with friends and family
 
+- [x] improve Chrome extension styling to match main app
+- [x] link to Chrome extension in user menu
 - [x] add feedback button and form
 - [x] develop and deploy landing page
 - [x] add summary count and limit and plan type in user account menu
@@ -74,6 +74,7 @@
 # Pre-launch
 
 - [ ] read and complete: https://docs.stripe.com/billing/testing
+- [ ] prep for each launch
 
 - [x] upgrade accounts for Vercel and Supabase
 - [x] develop demo app on subdomain

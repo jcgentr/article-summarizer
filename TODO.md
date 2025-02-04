@@ -76,6 +76,7 @@
 - [ ] read and complete: https://docs.stripe.com/billing/testing
 - [ ] prep for each launch
 
+- [x] enable Vercel analytics on demo, landing, and main app
 - [x] upgrade accounts for Vercel and Supabase
 - [x] develop demo app on subdomain
 - [x] put main app on app subdomain

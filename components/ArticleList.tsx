@@ -12,7 +12,7 @@ import FilterDropdown, { FILTER_OPTIONS, FilterId } from "./FilterDropdown";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 };
 
 export function ArticleList({

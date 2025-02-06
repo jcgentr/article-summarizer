@@ -35,7 +35,9 @@ export function DeleteButton({ id }: DeleteButtonProps) {
       disabled={isDeleting}
     >
       <Trash2 className="h-4 w-4" />
-      {isDeleting ? "Deleting..." : "Delete"}
+      <span className="hidden sm:inline">
+        {isDeleting ? "Deleting..." : "Delete"}
+      </span>
     </Button>
   );
 }

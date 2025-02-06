@@ -1,4 +1,4 @@
-import { Clock, FileText, LinkIcon, User } from "lucide-react";
+import { Clock, FileText, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DeleteButton } from "./DeleteButton";
@@ -13,6 +13,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
+import React from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export function ArticleCard({
   id,
@@ -43,14 +50,16 @@ export function ArticleCard({
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
-            {title}
-          </a>
+          <TooltipWrapper text={url}>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              {title}
+            </a>
+          </TooltipWrapper>
         </CardTitle>
         {author && (
           <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
@@ -73,32 +82,23 @@ export function ArticleCard({
           </AccordionItem>
         </Accordion>
 
-        <div className="flex flex-wrap gap-3">
-          <Badge
-            variant="secondary"
-            className="flex items-center gap-1 px-4 py-2"
-          >
-            <FileText className="h-4 w-4" />
-            {word_count.toLocaleString("en-US")} words
-          </Badge>
-          <Badge
-            variant="secondary"
-            className="flex items-center gap-1 px-4 py-2"
-          >
-            <Clock className="h-4 w-4" />
-            {read_time} min read
-          </Badge>
-        </div>
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center text-blue-500 hover:underline whitespace-nowrap"
-          >
-            <LinkIcon className="h-4 w-4 mr-1 flex-shrink-0" />
-            Read full article
-          </a>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+          <div className="flex gap-2">
+            <Badge
+              variant="secondary"
+              className="flex items-center gap-1 px-4 py-2"
+            >
+              <FileText className="h-4 w-4 flex-shrink-0" />
+              {word_count.toLocaleString("en-US")} words
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="flex items-center gap-1 px-4 py-2"
+            >
+              <Clock className="h-4 w-4 flex-shrink-0" />
+              {read_time} min read
+            </Badge>
+          </div>
           <div className="flex items-center gap-4 justify-end">
             <AnimatePresence>
               {has_read && (
@@ -121,5 +121,23 @@ export function ArticleCard({
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+interface TooltipWrapperProps {
+  children: React.ReactNode;
+  text: string;
+}
+
+function TooltipWrapper({ children, text }: TooltipWrapperProps) {
+  return (
+    <TooltipProvider delayDuration={100}>
+      <Tooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent>
+          <p className="truncate max-w-[400px]">{text}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

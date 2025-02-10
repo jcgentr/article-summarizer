@@ -15,7 +15,6 @@
 - [ ] be able to delete from chrome extension? local vs db vs both
 - [ ] virtualize article list (https://tanstack.com/virtual/latest)
   - [ ] add infinite scrolling with API fetching
-- [ ] add print button
 - [ ] add OG image next to title
 - [ ] offer forgot password option
 - [ ] investigate why so many summaries are not parsed
@@ -28,9 +27,12 @@
 - [ ] offer Github and Google sign in providers
 - [ ] try out deepseek API
 
+- [ ] add SEO text on this and demo
+- [ ] update landing page to remove coming soon on Print feature
 - [ ] add publish date
-- [ ] test full app with friends and family
 
+- [x] add print button
+- [x] test full app with friends
 - [x] improve Chrome extension styling to match main app
 - [x] link to Chrome extension in user menu
 - [x] add feedback button and form
@@ -96,18 +98,19 @@
 
 ### Articles Table (articles)
 
-| Column     | Type                     | Description                      |
-| ---------- | ------------------------ | -------------------------------- |
-| id         | uuid                     | Primary key                      |
-| url        | text                     | Article URL (unique)             |
-| content    | text                     | Full article content             |
-| summary    | text                     | AI-generated summary             |
-| tags       | text                     | Article categories               |
-| author     | text                     | Article author                   |
-| title      | text                     | Article title                    |
-| word_count | integer                  | Total word count                 |
-| created_at | timestamp with time zone | When the record was created      |
-| updated_at | timestamp with time zone | When the record was last updated |
+| Column            | Type                     | Description                      |
+| ----------------- | ------------------------ | -------------------------------- |
+| id                | uuid                     | Primary key                      |
+| url               | text                     | Article URL (unique)             |
+| content           | text                     | Full article content             |
+| formatted_content | text                     | HTML formatted content           |
+| summary           | text                     | AI-generated summary             |
+| tags              | text                     | Article categories               |
+| author            | text                     | Article author                   |
+| title             | text                     | Article title                    |
+| word_count        | integer                  | Total word count                 |
+| created_at        | timestamp with time zone | When the record was created      |
+| updated_at        | timestamp with time zone | When the record was last updated |
 
 ### User Articles Table (user_articles)
 

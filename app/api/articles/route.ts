@@ -21,13 +21,10 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
-  console.log(`chrome-extension://${process.env.NEXT_PUBLIC_EXTENSION_ID}`);
   try {
     const headersList = await headers();
     const token = headersList.get("Authorization")?.split("Bearer ")[1];
     const refreshToken = headersList.get("X-Refresh-Token");
-
-    console.log({ access_token: token, refresh_token: refreshToken });
 
     if (!token || !refreshToken) {
       return NextResponse.json(
@@ -47,8 +44,6 @@ export async function POST(request: Request) {
       refresh_token: refreshToken,
     });
 
-    console.log(user);
-
     if (authError || !user) {
       return NextResponse.json(
         { error: "Invalid token" },
@@ -67,14 +62,11 @@ export async function POST(request: Request) {
     }
 
     // First check if article already exists
-    const { data: existingArticle, error: existingArticleError } =
-      await supabase.from("articles").select().eq("url", url).single();
-
-    console.log("Query response:", {
-      data: existingArticle,
-      error: existingArticleError,
-      queriedUrl: url,
-    });
+    const { data: existingArticle } = await supabase
+      .from("articles")
+      .select()
+      .eq("url", url)
+      .single();
 
     if (existingArticle) {
       // Check if user already has this article saved

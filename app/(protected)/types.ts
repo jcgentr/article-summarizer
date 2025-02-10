@@ -13,6 +13,7 @@ export interface Article {
   rating: number | null;
   created_at: string;
   updated_at: string;
+  formatted_content: string | null;
 }
 
 export interface UserMetadata {

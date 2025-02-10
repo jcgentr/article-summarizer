@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { PrintButton } from "./PrintButton";
 
 export function ArticleCard({
   id,
@@ -32,6 +33,7 @@ export function ArticleCard({
   has_read,
   rating,
   tags,
+  formatted_content,
   handleTagClick,
 }: Article & {
   handleTagClick: (tag: string) => void;
@@ -113,6 +115,7 @@ export function ArticleCard({
               )}
             </AnimatePresence>
             <ReadCheckbox id={id} initialReadStatus={has_read} />
+            {formatted_content && <PrintButton id={id} />}
             <DeleteButton id={id} />
           </div>
         </div>

@@ -118,6 +118,7 @@ export async function createArticleSummary(
     const doc = new JSDOM(html, { url });
     const reader = new Readability(doc.window.document);
     const article = reader.parse();
+    console.log(article);
 
     if (!article) {
       throw new Error("Failed to parse article");
@@ -135,6 +136,7 @@ export async function createArticleSummary(
         title: article.title,
         author: article.byline,
         content: cleanContent,
+        formatted_content: article.content,
         word_count: wordCount,
         summary: result.summary,
         tags: result.tags,

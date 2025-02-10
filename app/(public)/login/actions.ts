@@ -13,7 +13,6 @@ export async function login(
 ) {
   console.log("logging in...");
   const plan = formData.get("plan") as string | undefined;
-  console.log(plan);
   const supabase = await createClient();
 
   // type-casting here for convenience

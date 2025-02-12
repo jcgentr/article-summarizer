@@ -25,15 +25,15 @@ export function PrintableArticle({
     <article className="print-article max-w-3xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-4">{title}</h1>
       <div className="flex justify-between flex-wrap gap-2 text-muted-foreground mb-8">
-        {author && <p>{author}</p>}
+        {author && <div>{author}</div>}
         {published_time && (
-          <p>
+          <div>
             {new Date(published_time).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
               day: "numeric",
             })}
-          </p>
+          </div>
         )}
       </div>
       <div

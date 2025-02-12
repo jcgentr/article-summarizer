@@ -28,9 +28,13 @@
 - [ ] try out deepseek API
 
 - [ ] add SEO text on this and demo
-- [ ] update landing page to remove coming soon on Print feature
-- [ ] add publish date
+- [ ] copy over changes from main app to demo
+- [ ] add onboarding instructions to first time users
+- [ ] add published_time to chrome ext
+- [ ] formatted_content not saved in prod (probably need to add code to chrome ext API)
 
+- [x] add publish date
+- [x] update landing page to remove coming soon on Print feature
 - [x] add print button
 - [x] test full app with friends
 - [x] improve Chrome extension styling to match main app
@@ -109,6 +113,7 @@
 | author            | text                     | Article author                   |
 | title             | text                     | Article title                    |
 | word_count        | integer                  | Total word count                 |
+| published_time    | timestamptz              | When the article was published   |
 | created_at        | timestamp with time zone | When the record was created      |
 | updated_at        | timestamp with time zone | When the record was last updated |
 

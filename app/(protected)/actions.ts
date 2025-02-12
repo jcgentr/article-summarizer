@@ -135,6 +135,7 @@ export async function createArticleSummary(
         url,
         title: article.title,
         author: article.byline,
+        published_time: article.publishedTime,
         content: cleanContent,
         formatted_content: article.content,
         word_count: wordCount,

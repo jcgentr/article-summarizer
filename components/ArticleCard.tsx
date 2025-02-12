@@ -1,4 +1,4 @@
-import { Clock, FileText, User } from "lucide-react";
+import { Calendar, Clock, MessageSquare, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DeleteButton } from "./DeleteButton";
@@ -26,6 +26,7 @@ export function ArticleCard({
   id,
   title,
   author,
+  published_time,
   summary,
   word_count,
   read_time,
@@ -63,12 +64,24 @@ export function ArticleCard({
             </a>
           </TooltipWrapper>
         </CardTitle>
-        {author && (
-          <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
-            <User className="h-4 w-4" />
-            {author}
-          </p>
-        )}
+        <div className="flex justify-between gap-2 flex-wrap">
+          {author && (
+            <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
+              <User className="h-4 w-4 flex-shrink-0" />
+              {author}
+            </p>
+          )}
+          {published_time && (
+            <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
+              <Calendar className="h-4 w-4 flex-shrink-0" />
+              {new Date(published_time).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </p>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-6">
         <Accordion type="single" collapsible defaultValue="item-1">
@@ -90,7 +103,7 @@ export function ArticleCard({
               variant="secondary"
               className="flex items-center gap-1 px-4 py-2"
             >
-              <FileText className="h-4 w-4 flex-shrink-0" />
+              <MessageSquare className="h-4 w-4 flex-shrink-0" />
               {word_count.toLocaleString("en-US")} words
             </Badge>
             <Badge

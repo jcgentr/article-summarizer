@@ -23,7 +23,8 @@ export default async function Home() {
       tags,
       author,
       word_count,
-      formatted_content
+      formatted_content,
+      published_time
     )
   `
     )
@@ -34,6 +35,7 @@ export default async function Home() {
     id: ua.article.id,
     url: ua.article.url,
     title: ua.article.title,
+    published_time: ua.article.published_time,
     summary: ua.article.summary,
     created_at: ua.article.created_at,
     updated_at: ua.article.updated_at,

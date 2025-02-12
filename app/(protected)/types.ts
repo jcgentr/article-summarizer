@@ -6,6 +6,7 @@ export interface Article {
   summary: string;
   tags: string | null;
   author: string | null;
+  published_time: string | null;
   title: string;
   word_count: number;
   read_time: number;

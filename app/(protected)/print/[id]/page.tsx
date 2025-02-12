@@ -12,7 +12,7 @@ export default async function name({
 
   const { data: article } = await supabase
     .from("articles")
-    .select("title, author, formatted_content")
+    .select("title, author, formatted_content, published_time")
     .eq("id", id)
     .single();
 
@@ -24,6 +24,7 @@ export default async function name({
     <PrintableArticle
       title={article.title}
       author={article.author}
+      published_time={article.published_time}
       content={article.formatted_content}
     />
   );

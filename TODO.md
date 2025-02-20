@@ -1,5 +1,11 @@
+# AI and Analytics
+
 - [ ] be able to chat with AI about article (may evolve to RAG)
 - [ ] build tables and data analytics for articles
+- [ ] try out deepseek API
+
+# Core Features
+
 - [ ] be able to configure summarization
 - [ ] read progress bar on side
 - [ ] improve author parsing
@@ -12,27 +18,46 @@
 - [ ] update existing article on create if hash of content has changed
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
-- [ ] be able to delete from chrome extension? local vs db vs both
+- [ ] add OG image next to title
+- [ ] custom tag feature
+- [ ] be able to remove tags
+
+# Performance
+
 - [ ] virtualize article list (https://tanstack.com/virtual/latest)
   - [ ] add infinite scrolling with API fetching
-- [ ] add OG image next to title
+
+# Chrome Extension
+
+- [ ] be able to delete from chrome extension? local vs db vs both
+- [ ] add published_time to chrome ext
+
+# Authentication & User Management
+
 - [ ] offer forgot password option
-- [ ] investigate why so many summaries are not parsed
 - [ ] turn supabase email verification back on
   - [ ] Email rate-limits and restrictions (see Supabase SMTP docs)
 - [ ] improve login and signup flow (verify email not intuitive)
   - [ ] let user know if account exists or not?
-- [ ] initial modal for demo and free users telling them of usage limits
-- [ ] email notifications on landing page for updates
 - [ ] offer Github and Google sign in providers
-- [ ] try out deepseek API
 
-- [ ] add SEO text on this and demo
-- [ ] copy over changes from main app to demo
+# User Experience
+
+- [ ] initial modal for demo and free users telling them of usage limits
 - [ ] add onboarding instructions to first time users
-- [ ] add published_time to chrome ext
-- [ ] formatted_content not saved in prod (probably need to add code to chrome ext API)
+- [ ] investigate why so many summaries are not parsed
 
+# Marketing & Branding
+
+- [ ] post new feature updates via Loom and Twitter
+- [ ] start Gistr Twitter page
+- [ ] email notifications on landing page for updates
+- [ ] make a legit logo
+- [ ] improve chrome extension page
+
+- [x] copy over changes from main app to demo (cherry pick in future)
+- [x] formatted_content not saved in prod (probably need to add code to chrome ext API)
+- [x] add SEO text on this and demo
 - [x] add publish date
 - [x] update landing page to remove coming soon on Print feature
 - [x] add print button
@@ -80,8 +105,8 @@
 # Pre-launch
 
 - [ ] read and complete: https://docs.stripe.com/billing/testing
-- [ ] prep for each launch
 
+- [x] prep for each launch
 - [x] enable Vercel analytics on demo, landing, and main app
 - [x] upgrade accounts for Vercel and Supabase
 - [x] develop demo app on subdomain
@@ -145,6 +170,8 @@ Note: The user_id and article_id combination is unique in the user_articles tabl
 | updated_at          | timestamp with time zone | When the record was last updated          |
 
 # The Goodreads for web articles?
+
+## Or pivot to a save-it-later research tool?
 
 # Inspiration
 

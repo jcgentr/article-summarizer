@@ -1,7 +1,5 @@
 # Bug
 
-- [ ] adding an existing article doesn't show it at the top for Newest first sort by
-
 # AI and Analytics
 
 - [ ] be able to chat with AI about article (may evolve to RAG)
@@ -53,11 +51,13 @@
 
 - [ ] post new feature updates via Loom and Twitter
 - [ ] start Gistr Twitter page
+  - [ ] could we do a summary a day on Twitter page?
 - [ ] email notifications on landing page for updates
 - [ ] make a legit logo
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
 
+- [x] adding an existing article doesn't show it at the top for Newest first sort by
 - [x] most popular articles leaderboard based on all users saved summaries
 - [x] top rated articles leaderboard
 - [x] copy over changes from main app to demo (cherry pick in future)

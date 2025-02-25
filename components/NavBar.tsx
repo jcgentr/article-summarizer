@@ -30,19 +30,32 @@ export default async function NavBar({ user }: { user: User }) {
   return (
     <nav className="w-full border-b">
       <div className="flex h-16 items-center justify-between mx-4">
-        <Link href="/">
-          <h2 className="flex items-center">
-            <Image
-              src={gistrLogo}
-              className="mr-1 flex-shrink-0"
-              alt="Gistr Logo"
-              width="32"
-              height="32"
-            />
-            <span className="text-2xl font-bold">Gistr</span>
-          </h2>
+        <Link href="/" className="flex items-center">
+          <Image
+            src={gistrLogo}
+            className="mr-1 flex-shrink-0"
+            alt="Gistr Logo"
+            width="32"
+            height="32"
+          />
+          <span className="text-2xl font-bold">Gistr</span>
         </Link>
-        <div className="flex gap-4">
+
+        <div className="flex gap-4 items-center">
+          <nav className="flex items-center space-x-4">
+            {/* <Link
+              href="/"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              Home
+            </Link> */}
+            <Link
+              href="/leaderboard"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              Leaderboard
+            </Link>
+          </nav>
           <NavUser
             email={user.email || ""}
             stripeCustomerId={metadata.stripe_customer_id}

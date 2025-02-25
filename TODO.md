@@ -1,3 +1,7 @@
+# Bug
+
+- [ ] adding an existing article doesn't show it at the top for Newest first sort by
+
 # AI and Analytics
 
 - [ ] be able to chat with AI about article (may evolve to RAG)
@@ -13,8 +17,6 @@
 - [ ] add ability to favorite summaries
 - [ ] show archive tab or filter
 - [ ] show favorite tab or filter
-- [ ] most popular articles leaderboard based on all users saved summaries
-- [ ] top rated articles leaderboard
 - [ ] update existing article on create if hash of content has changed
 - [ ] on title hover show preview of site
 - [ ] add multi-filter capability
@@ -43,8 +45,8 @@
 
 # User Experience
 
-- [ ] initial modal for demo and free users telling them of usage limits
-- [ ] add onboarding instructions to first time users
+- [ ] add onboarding instructions to first time users (https://www.onborda.dev/)
+  - [ ] initial modal for demo and free users telling them of usage limits
 - [ ] investigate why so many summaries are not parsed
 
 # Marketing & Branding
@@ -55,6 +57,8 @@
 - [ ] make a legit logo
 - [ ] improve chrome extension page
 
+- [x] most popular articles leaderboard based on all users saved summaries
+- [x] top rated articles leaderboard
 - [x] copy over changes from main app to demo (cherry pick in future)
 - [x] formatted_content not saved in prod (probably need to add code to chrome ext API)
 - [x] add SEO text on this and demo
@@ -186,3 +190,5 @@ Note: The user_id and article_id combination is unique in the user_articles tabl
 - https://thestorygraph.com/
 
 - https://glasp.co/
+
+- https://www.getrecall.ai/

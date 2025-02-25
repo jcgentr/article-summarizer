@@ -24,6 +24,13 @@ interface TopRatedArticle {
   word_count: number;
 }
 
+interface SupabaseError {
+  message: string;
+  details: string;
+  hint: string;
+  code: string;
+}
+
 export default async function Leaderboard() {
   const supabase = await createClient();
 
@@ -32,7 +39,10 @@ export default async function Leaderboard() {
     {
       limit_count: 10,
     }
-  )) as { data: TopRatedArticle[] | null; error: any };
+  )) as {
+    data: TopRatedArticle[] | null;
+    error: SupabaseError | null;
+  };
 
   if (error) {
     console.error("Error fetching top rated articles:", error);
@@ -43,7 +53,10 @@ export default async function Leaderboard() {
     {
       limit_count: 10,
     }
-  )) as { data: TopSavedArticle[] | null; error: any };
+  )) as {
+    data: TopSavedArticle[] | null;
+    error: SupabaseError | null;
+  };
 
   if (topSavedError) {
     console.error("Error fetching top saved articles:", topSavedError);

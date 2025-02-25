@@ -56,6 +56,7 @@
 - [ ] email notifications on landing page for updates
 - [ ] make a legit logo
 - [ ] improve chrome extension page
+- [ ] add Share feature on summary card (copy Glasp)
 
 - [x] most popular articles leaderboard based on all users saved summaries
 - [x] top rated articles leaderboard

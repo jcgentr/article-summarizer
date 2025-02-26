@@ -9,6 +9,8 @@
 # Core Features
 
 - [ ] be able to configure summarization
+  - [ ] secondary summarization saved to user_articles table?
+  - [ ] maybe translate to different languages in the future?
 - [ ] read progress bar on side
 - [ ] improve author parsing
 - [ ] add ability to archive summaries
@@ -20,7 +22,11 @@
 - [ ] add multi-filter capability
 - [ ] add OG image next to title
 - [ ] custom tag feature
+- [ ] remove AI tags and add user-added tags
 - [ ] be able to remove tags
+- [ ] Project folders to hold summaries together (like Todoist My Projects)
+- [ ] have published_date to the left even if author undefined
+- [ ] save parse errors to database
 
 # Performance
 
@@ -51,12 +57,14 @@
 
 - [ ] post new feature updates via Loom and Twitter
 - [ ] start Gistr Twitter page
-  - [ ] could we do a summary a day on Twitter page?
+  - [ ] could we do a summary a day on Twitter page? make it viral
+  - [ ] summaries of followers' articles posted
 - [ ] email notifications on landing page for updates
 - [ ] make a legit logo
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
 
+- [x] change font to Inter
 - [x] adding an existing article doesn't show it at the top for Newest first sort by
 - [x] most popular articles leaderboard based on all users saved summaries
 - [x] top rated articles leaderboard

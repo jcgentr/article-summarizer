@@ -25,7 +25,6 @@
 - [ ] remove AI tags and add user-added tags
 - [ ] be able to remove tags
 - [ ] Project folders to hold summaries together (like Todoist My Projects)
-- [ ] have published_date to the left even if author undefined
 - [ ] save parse errors to database
 
 # Performance
@@ -64,6 +63,7 @@
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
 
+- [x] have published_date to the right even if author undefined
 - [x] change font to Inter
 - [x] adding an existing article doesn't show it at the top for Newest first sort by
 - [x] most popular articles leaderboard based on all users saved summaries

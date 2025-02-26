@@ -72,7 +72,7 @@ export function ArticleCard({
             </p>
           )}
           {published_time && (
-            <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
+            <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1 ml-auto">
               <Calendar className="h-4 w-4 flex-shrink-0" />
               {new Date(published_time).toLocaleDateString("en-US", {
                 year: "numeric",

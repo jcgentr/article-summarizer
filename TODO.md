@@ -44,7 +44,6 @@
   - [ ] Email rate-limits and restrictions (see Supabase SMTP docs)
 - [ ] improve login and signup flow (verify email not intuitive)
   - [ ] let user know if account exists or not?
-- [ ] offer Github and Google sign in providers
 
 # User Experience
 
@@ -62,6 +61,8 @@
 - [ ] make a legit logo
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
+
+- [ ] offer Github and Google sign in providers
 
 - [x] have published_date to the right even if author undefined
 - [x] change font to Inter

@@ -62,3 +62,21 @@ export async function login(
 
   redirect("/");
 }
+
+export async function signInWithGithub() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    console.error(error);
+    return { message: `${error.message}` };
+  }
+
+  console.log("GitHub login initiated", data.url);
+  redirect(data.url ?? "/");
+}

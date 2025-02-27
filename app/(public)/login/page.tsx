@@ -1,15 +1,18 @@
 "use client";
 
-import { Suspense, useActionState } from "react";
+import { Suspense, useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2, LogIn } from "lucide-react";
-
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { login } from "./actions";
+import { login, signInWithGithub } from "./actions";
 import { useSearchParams } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 
 const initialState = {
   message: "",
@@ -62,16 +65,62 @@ function Login() {
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(login, initialState);
 
+  useEffect(() => {
+    if (state.message) {
+      toast.error(state.message);
+    }
+  }, [state]);
+
+  const handleGithubLogin = async () => {
+    console.log("github login triggered...");
+    const result = await signInWithGithub();
+    if (result?.message) {
+      console.error(result.message);
+      toast.error(result.message);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    console.log("google...");
+  };
+
   return (
-    <div>
-      <form action={formAction} className="space-y-8">
-        <input type="hidden" name="plan" value={plan ?? undefined} />
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold tracking-tight">Log in</h1>
-          <p className="text-sm text-muted-foreground">
-            Enter your email and password below to log in
-          </p>
+    <div className="w-full max-w-sm mx-auto space-y-4">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Log in</h1>
+      </div>
+      <div className="space-y-4 pb-2">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={handleGoogleLogin}
+        >
+          <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
+          Log in with Google
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={handleGithubLogin}
+        >
+          <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
+          Log in with GitHub
+        </Button>
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <Separator className="w-full" />
         </div>
+        <div className="relative flex justify-center text-xs">
+          <span className="bg-background px-2 text-muted-foreground">
+            or continue with
+          </span>
+        </div>
+      </div>
+
+      <form action={formAction} className="space-y-4">
+        <input type="hidden" name="plan" value={plan ?? undefined} />
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <EmailInput />
@@ -84,14 +133,8 @@ function Login() {
           <SubmitButton />
         </div>
       </form>
-      <p
-        aria-live="polite"
-        role="status"
-        className="mt-4 text-sm text-red-600 h-6"
-      >
-        {state?.message && `${state?.message} (${new Date().toLocaleString()})`}
-      </p>
-      <div className="mt-6 text-center">
+
+      <div className="text-center pt-4">
         <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
@@ -108,12 +151,25 @@ function Login() {
 
 function LoginSkeleton() {
   return (
-    <div>
-      <div className="space-y-8">
-        <div className="space-y-2">
-          <div className="h-8 w-32 bg-muted animate-pulse rounded" />
-          <div className="h-4 w-64 bg-muted animate-pulse rounded" />
+    <div className="w-full max-w-sm mx-auto space-y-4">
+      <div>
+        <div className="h-8 w-32 bg-muted animate-pulse rounded" />
+      </div>
+      <div className="space-y-4 pb-2">
+        <div className="h-10 w-full bg-muted animate-pulse rounded" />
+        <div className="h-10 w-full bg-muted animate-pulse rounded" />
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full h-[1px] bg-muted animate-pulse" />
         </div>
+        <div className="relative flex justify-center">
+          <div className="h-4 w-24 bg-muted animate-pulse rounded" />
+        </div>
+      </div>
+
+      <div className="space-y-4">
         <div className="space-y-2">
           <div className="h-4 w-12 bg-muted animate-pulse rounded" />
           <div className="h-10 w-full bg-muted animate-pulse rounded" />
@@ -126,7 +182,8 @@ function LoginSkeleton() {
           <div className="h-10 w-full bg-muted animate-pulse rounded" />
         </div>
       </div>
-      <div className="mt-6 text-center">
+
+      <div className="text-center pt-4">
         <div className="h-4 w-48 bg-muted animate-pulse rounded mx-auto" />
       </div>
     </div>

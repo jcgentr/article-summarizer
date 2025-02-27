@@ -64,8 +64,9 @@ function Login() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(login, initialState);
-  const [isGoogleLoading, setGoogleLoading] = useState(false);
-  const [isGithubLoading, setGithubLoading] = useState(false);
+  const [loadingProvider, setLoadingProvider] = useState<
+    "google" | "github" | null
+  >(null);
 
   useEffect(() => {
     if (state.message) {
@@ -75,7 +76,7 @@ function Login() {
 
   const handleGoogleLogin = async () => {
     console.log("google login triggered...");
-    setGoogleLoading(true);
+    setLoadingProvider("google");
     try {
       const result = await signInWithGoogle();
       if (result?.message) {
@@ -84,13 +85,13 @@ function Login() {
     } catch (error) {
       console.error("An error occurred during Google login:", error);
       toast.error("An error occurred. Please try again.");
-      setGoogleLoading(false);
+      setLoadingProvider(null);
     }
   };
 
   const handleGithubLogin = async () => {
     console.log("github login triggered...");
-    setGithubLoading(true);
+    setLoadingProvider("github");
     try {
       const result = await signInWithGithub();
       if (result?.message) {
@@ -99,7 +100,7 @@ function Login() {
     } catch (error) {
       console.error("An error occurred during GitHub login:", error);
       toast.error("An error occurred. Please try again.");
-      setGithubLoading(false);
+      setLoadingProvider(null);
     }
   };
 
@@ -113,19 +114,23 @@ function Login() {
           variant="outline"
           className="w-full"
           onClick={handleGoogleLogin}
-          disabled={isGoogleLoading}
+          disabled={loadingProvider !== null}
         >
           <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
-          Log in with Google
+          {loadingProvider === "google"
+            ? "Logging in with Google..."
+            : "Log in with Google"}
         </Button>
         <Button
           variant="outline"
           className="w-full"
           onClick={handleGithubLogin}
-          disabled={isGithubLoading}
+          disabled={loadingProvider !== null}
         >
           <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
-          Log in with GitHub
+          {loadingProvider === "github"
+            ? "Logging in with GitHub..."
+            : "Log in with GitHub"}
         </Button>
       </div>
 

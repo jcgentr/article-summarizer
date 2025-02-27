@@ -65,8 +65,9 @@ function Signup() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(signup, initialState);
-  const [isGoogleLoading, setGoogleLoading] = useState(false);
-  const [isGithubLoading, setGithubLoading] = useState(false);
+  const [loadingProvider, setLoadingProvider] = useState<
+    "google" | "github" | null
+  >(null);
 
   useEffect(() => {
     if (state.message) {
@@ -76,7 +77,7 @@ function Signup() {
 
   const handleGoogleSignup = async () => {
     console.log("google signup triggered...");
-    setGoogleLoading(true);
+    setLoadingProvider("google");
     try {
       const result = await signInWithGoogle();
       if (result?.message) {
@@ -85,13 +86,13 @@ function Signup() {
     } catch (error) {
       console.error("An error occurred during Google signup:", error);
       toast.error("An error occurred. Please try again.");
-      setGoogleLoading(false);
+      setLoadingProvider(null);
     }
   };
 
   const handleGithubSignup = async () => {
     console.log("github signup triggered...");
-    setGithubLoading(true);
+    setLoadingProvider("github");
     try {
       const result = await signInWithGithub();
       if (result?.message) {
@@ -100,7 +101,7 @@ function Signup() {
     } catch (error) {
       console.error("An error occurred during GitHub signup:", error);
       toast.error("An error occurred. Please try again.");
-      setGithubLoading(false);
+      setLoadingProvider(null);
     }
   };
 
@@ -114,19 +115,23 @@ function Signup() {
           variant="outline"
           className="w-full"
           onClick={handleGoogleSignup}
-          disabled={isGoogleLoading}
+          disabled={loadingProvider !== null}
         >
           <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
-          Sign up with Google
+          {loadingProvider === "google"
+            ? "Signing up with Google..."
+            : "Sign up with Google"}
         </Button>
         <Button
           variant="outline"
           className="w-full"
           onClick={handleGithubSignup}
-          disabled={isGithubLoading}
+          disabled={loadingProvider !== null}
         >
           <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
-          Sign up with GitHub
+          {loadingProvider === "github"
+            ? "Signing up with GitHub..."
+            : "Sign up with GitHub"}
         </Button>
       </div>
 

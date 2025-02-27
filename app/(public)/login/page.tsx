@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useActionState, useEffect } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2, LogIn } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { login, signInWithGithub } from "./actions";
+import { login, signInWithGithub, signInWithGoogle } from "./actions";
 import { useSearchParams } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
@@ -64,6 +64,8 @@ function Login() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(login, initialState);
+  const [isGoogleLoading, setGoogleLoading] = useState(false);
+  const [isGithubLoading, setGithubLoading] = useState(false);
 
   useEffect(() => {
     if (state.message) {
@@ -71,17 +73,34 @@ function Login() {
     }
   }, [state]);
 
-  const handleGithubLogin = async () => {
-    console.log("github login triggered...");
-    const result = await signInWithGithub();
-    if (result?.message) {
-      console.error(result.message);
-      toast.error(result.message);
+  const handleGoogleLogin = async () => {
+    console.log("google login triggered...");
+    setGoogleLoading(true);
+    try {
+      const result = await signInWithGoogle();
+      if (result?.message) {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during Google login:", error);
+      toast.error("An error occurred. Please try again.");
+      setGoogleLoading(false);
     }
   };
 
-  const handleGoogleLogin = async () => {
-    console.log("google...");
+  const handleGithubLogin = async () => {
+    console.log("github login triggered...");
+    setGithubLoading(true);
+    try {
+      const result = await signInWithGithub();
+      if (result?.message) {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during GitHub login:", error);
+      toast.error("An error occurred. Please try again.");
+      setGithubLoading(false);
+    }
   };
 
   return (
@@ -94,6 +113,7 @@ function Login() {
           variant="outline"
           className="w-full"
           onClick={handleGoogleLogin}
+          disabled={isGoogleLoading}
         >
           <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
           Log in with Google
@@ -102,6 +122,7 @@ function Login() {
           variant="outline"
           className="w-full"
           onClick={handleGithubLogin}
+          disabled={isGithubLoading}
         >
           <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
           Log in with GitHub

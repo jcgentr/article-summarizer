@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useActionState, useEffect } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2, UserPlus } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
@@ -13,7 +13,7 @@ import { signup } from "./actions";
 import { useSearchParams } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { signInWithGithub } from "../login/actions";
+import { signInWithGithub, signInWithGoogle } from "../login/actions";
 
 const initialState = {
   message: "",
@@ -65,6 +65,8 @@ function Signup() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const [state, formAction] = useActionState(signup, initialState);
+  const [isGoogleLoading, setGoogleLoading] = useState(false);
+  const [isGithubLoading, setGithubLoading] = useState(false);
 
   useEffect(() => {
     if (state.message) {
@@ -72,17 +74,34 @@ function Signup() {
     }
   }, [state]);
 
-  const handleGithubSignup = async () => {
-    console.log("github signup triggered...");
-    const result = await signInWithGithub();
-    if (result?.message) {
-      console.error(result.message);
-      toast.error(result.message);
+  const handleGoogleSignup = async () => {
+    console.log("google signup triggered...");
+    setGoogleLoading(true);
+    try {
+      const result = await signInWithGoogle();
+      if (result?.message) {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during Google signup:", error);
+      toast.error("An error occurred. Please try again.");
+      setGoogleLoading(false);
     }
   };
 
-  const handleGoogleSignup = async () => {
-    console.log("google...");
+  const handleGithubSignup = async () => {
+    console.log("github signup triggered...");
+    setGithubLoading(true);
+    try {
+      const result = await signInWithGithub();
+      if (result?.message) {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("An error occurred during GitHub signup:", error);
+      toast.error("An error occurred. Please try again.");
+      setGithubLoading(false);
+    }
   };
 
   return (
@@ -95,6 +114,7 @@ function Signup() {
           variant="outline"
           className="w-full"
           onClick={handleGoogleSignup}
+          disabled={isGoogleLoading}
         >
           <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
           Sign up with Google
@@ -103,6 +123,7 @@ function Signup() {
           variant="outline"
           className="w-full"
           onClick={handleGithubSignup}
+          disabled={isGithubLoading}
         >
           <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
           Sign up with GitHub

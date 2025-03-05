@@ -8,10 +8,6 @@
 
 # Core Features
 
-- [ ] Project folders to hold summaries together (like Todoist My Projects)
-  - [ ] Implement project creation and management
-  - [ ] Allow users to assign articles/summaries to projects
-  - [ ] Add project view and filtering options
 - [ ] Multi-filter capability (including tags and projects)
 - [ ] Be able to configure summarization
   - [ ] Secondary summarization saved to user_articles table?
@@ -54,25 +50,29 @@
 # Marketing & Branding
 
 - [ ] post new feature updates via Loom and Twitter
-- [ ] start Gistr Twitter page
-  - [ ] could we do a summary a day on Twitter page? make it viral
-  - [ ] summaries of followers' articles posted
 - [ ] email notifications on landing page for updates
 - [ ] make a legit logo
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
 - [ ] reach out to True Crime podcasters to see if Gistr would help them
+- [ ] research SEO boosting techniques (get to Google's front page of "summarize articles")
 
 # Doing
 
-- [ ] Custom tag feature
-  - [ ] Add ability to create and assign custom tags to articles
-  - [ ] Implement tag management interface (add, edit, delete tags)
-- [ ] Remove AI tags and add user-added tags
-- [ ] Be able to remove tags from articles
+- [ ] start Gistr Twitter page
+  - [ ] could we do a summary a day on Twitter page? make it viral
+  - [ ] summaries of followers' articles posted
+- [ ] Project folders to hold summaries together (like Todoist My Projects)
+  - [ ] Implement project creation and management
+  - [ ] Allow users to assign articles/summaries to projects
+  - [ ] Add project view and filtering options
 
 # Done
 
+- [x] Custom tag feature
+  - [x] Add ability to create and assign custom tags to articles
+  - [x] Implement tag management interface (add and delete tags)
+- [x] Remove AI tags and add user-added tags
 - [x] offer Github and Google sign in providers
 - [x] have published_date to the right even if author undefined
 - [x] change font to Inter

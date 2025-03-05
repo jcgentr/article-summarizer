@@ -3,10 +3,7 @@ import config from "@/app/config";
 
 const TOKEN_LIMIT = 50000; // ~37,500 words
 
-export async function generateSummaryAndTags(
-  content: string,
-  wordCount: number
-) {
+export async function generateSummary(content: string, wordCount: number) {
   // Rough token estimation (1 token ≈ 0.75 words)
   const estimatedTokens = Math.ceil(wordCount / 0.75);
 
@@ -24,18 +21,15 @@ export async function generateSummaryAndTags(
 
   ${content}
 
-  Also, provide 3-5 relevant topics/tags that this article would fall under.
   Output the response in JSON format. Follow this schema:
 
   | Column     | Type     | Description          |
   | ---------- | -------- | -------------------- |
   | summary    | text     | AI-generated summary |
-  | tags       | string[] | Article categories   |
 
   Here is an example of the output:
   {
       "summary": "This article discusses the impact of artificial intelligence on modern healthcare, focusing on recent breakthroughs in diagnostic imaging and personalized medicine. It explores how machine learning algorithms are improving early disease detection and treatment planning while addressing concerns about data privacy and the doctor-patient relationship.",
-      "tags": ["artificial intelligence", "healthcare", "medical technology", "machine learning"]
   }
   `;
 
@@ -62,9 +56,6 @@ export async function generateSummaryAndTags(
     // Create and return summary object
     const result = {
       summary: responseData.summary,
-      tags: Array.isArray(responseData.tags)
-        ? responseData.tags.join(",")
-        : responseData.tags,
     };
 
     return result;

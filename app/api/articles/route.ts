@@ -1,5 +1,5 @@
 import { PlanType } from "@/app/(protected)/types";
-import { generateSummaryAndTags } from "@/lib/ai";
+import { generateSummary } from "@/lib/ai";
 import { SUMMARY_LIMITS } from "@/lib/billing";
 import { shouldResetBillingCycle } from "@/lib/billing";
 import { createClient } from "@/utils/supabase/server";
@@ -186,7 +186,7 @@ export async function POST(request: Request) {
 
     const wordCount = article.textContent.trim().split(/\s+/).length;
     const cleanContent = article.textContent.replace(/\s+/g, " ").trim();
-    const result = await generateSummaryAndTags(cleanContent, wordCount);
+    const result = await generateSummary(cleanContent, wordCount);
 
     // Insert into articles table
     const { data: newArticle, error: articleError } = await supabase
@@ -200,7 +200,6 @@ export async function POST(request: Request) {
         formatted_content: article.content,
         word_count: wordCount,
         summary: result.summary,
-        tags: result.tags,
       })
       .select()
       .single();

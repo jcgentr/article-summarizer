@@ -4,7 +4,7 @@ import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
-import { generateSummaryAndTags } from "@/lib/ai";
+import { generateSummary } from "@/lib/ai";
 import { redirect } from "next/navigation";
 import { shouldResetBillingCycle, SUMMARY_LIMITS } from "@/lib/billing";
 import { PlanType } from "./types";
@@ -126,7 +126,7 @@ export async function createArticleSummary(
 
     const wordCount = article.textContent.trim().split(/\s+/).length;
     const cleanContent = article.textContent.replace(/\s+/g, " ").trim();
-    const result = await generateSummaryAndTags(cleanContent, wordCount);
+    const result = await generateSummary(cleanContent, wordCount);
 
     // Insert into articles table
     const { data: newArticle, error: articleError } = await supabase
@@ -140,7 +140,6 @@ export async function createArticleSummary(
         formatted_content: article.content,
         word_count: wordCount,
         summary: result.summary,
-        tags: result.tags,
       })
       .select()
       .single();
@@ -347,5 +346,41 @@ export async function createPortalSession() {
   } catch (error) {
     console.error("Error creating portal session:", error);
     throw error;
+  }
+}
+
+export async function addTag(articleId: string, tag: string) {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User must be logged in to add tags");
+    }
+
+    const normalizedTag = tag.toLowerCase().trim();
+
+    const { error } = await supabase
+      .from("user_article_tags")
+      .insert({
+        user_id: user.id,
+        article_id: articleId,
+        tag: normalizedTag,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    revalidatePath("/");
+
+    return { success: true, tag: normalizedTag };
+  } catch (error) {
+    console.error("Error adding tag:", error);
+    return { success: false, error: (error as Error).message };
   }
 }

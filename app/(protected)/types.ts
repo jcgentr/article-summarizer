@@ -4,7 +4,7 @@ export interface Article {
   id: string;
   url: string;
   summary: string;
-  tags: string | null;
+  tags: string[];
   author: string | null;
   published_time: string | null;
   title: string;
@@ -15,6 +15,12 @@ export interface Article {
   created_at: string;
   updated_at: string;
   formatted_content: string | null;
+}
+
+export interface Tag {
+  id: string;
+  tag: string;
+  created_at: string;
 }
 
 export interface UserMetadata {

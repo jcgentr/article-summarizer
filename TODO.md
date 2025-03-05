@@ -8,24 +8,24 @@
 
 # Core Features
 
-- [ ] be able to configure summarization
-  - [ ] secondary summarization saved to user_articles table?
-  - [ ] maybe translate to different languages in the future?
-- [ ] read progress bar on side
-- [ ] improve author parsing
-- [ ] add ability to archive summaries
-- [ ] add ability to favorite summaries
-- [ ] show archive tab or filter
-- [ ] show favorite tab or filter
-- [ ] update existing article on create if hash of content has changed
-- [ ] on title hover show preview of site
-- [ ] add multi-filter capability
-- [ ] add OG image next to title
-- [ ] custom tag feature
-- [ ] remove AI tags and add user-added tags
-- [ ] be able to remove tags
 - [ ] Project folders to hold summaries together (like Todoist My Projects)
-- [ ] save parse errors to database
+  - [ ] Implement project creation and management
+  - [ ] Allow users to assign articles/summaries to projects
+  - [ ] Add project view and filtering options
+- [ ] Multi-filter capability (including tags and projects)
+- [ ] Be able to configure summarization
+  - [ ] Secondary summarization saved to user_articles table?
+  - [ ] Maybe translate to different languages in the future?
+- [ ] Read progress bar on side
+- [ ] Improve author parsing
+- [ ] Add ability to archive summaries
+- [ ] Add ability to favorite summaries
+- [ ] Show archive tab or filter
+- [ ] Show favorite tab or filter
+- [ ] Update existing article on create if hash of content has changed
+- [ ] On title hover show preview of site
+- [ ] Add OG image next to title
+- [ ] Save parse errors to database
 
 # Performance
 
@@ -61,9 +61,19 @@
 - [ ] make a legit logo
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
+- [ ] reach out to True Crime podcasters to see if Gistr would help them
 
-- [ ] offer Github and Google sign in providers
+# Doing
 
+- [ ] Custom tag feature
+  - [ ] Add ability to create and assign custom tags to articles
+  - [ ] Implement tag management interface (add, edit, delete tags)
+- [ ] Remove AI tags and add user-added tags
+- [ ] Be able to remove tags from articles
+
+# Done
+
+- [x] offer Github and Google sign in providers
 - [x] have published_date to the right even if author undefined
 - [x] change font to Inter
 - [x] adding an existing article doesn't show it at the top for Newest first sort by

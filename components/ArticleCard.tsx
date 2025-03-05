@@ -21,6 +21,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { PrintButton } from "./PrintButton";
+import { TagInput } from "./TagInput";
 
 export function ArticleCard({
   id,
@@ -39,16 +40,6 @@ export function ArticleCard({
 }: Article & {
   handleTagClick: (tag: string) => void;
 }) {
-  const formattedTags = tags?.split(",").map((tag, index) => (
-    <span
-      key={index}
-      onClick={() => handleTagClick(tag.trim())}
-      className="text-sm cursor-pointer hover:underline bg-secondary/70 hover:bg-secondary/90 transition-colors px-3 py-1 rounded-full"
-    >
-      {tag.trim()}
-    </span>
-  ));
-
   return (
     <Card className="w-full">
       <CardHeader>
@@ -133,7 +124,11 @@ export function ArticleCard({
           </div>
         </div>
         <div className="text-muted-foreground flex gap-2 flex-wrap">
-          {formattedTags}
+          <TagInput
+            articleId={id}
+            initialTags={tags}
+            handleTagClick={handleTagClick}
+          />
         </div>
       </CardContent>
     </Card>

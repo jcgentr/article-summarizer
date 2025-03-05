@@ -34,7 +34,9 @@ export function ArticleList({
         return (
           article.title.toLowerCase().includes(searchLower) ||
           article.author?.toLowerCase().includes(searchLower) ||
-          article.tags?.toLowerCase().includes(searchLower) ||
+          article.tags?.some((tag) =>
+            tag.trim().toLowerCase().includes(searchLower)
+          ) ||
           article.url.toLowerCase().includes(searchLower)
         );
       }),

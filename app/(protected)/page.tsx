@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { Article } from "./types";
+import { Article, Tag } from "./types";
 import { ArticleList } from "@/components/ArticleList";
 
 export const maxDuration = 60; // Applies to the server actions
@@ -8,7 +8,7 @@ export default async function Home() {
   const supabase = await createClient();
 
   // Join user_articles with articles to get all user's saved articles
-  const { data: userArticles } = await supabase
+  const { data: userArticles, error } = await supabase
     .from("user_articles")
     .select(
       `
@@ -24,11 +24,14 @@ export default async function Home() {
       author,
       word_count,
       formatted_content,
-      published_time
+      published_time,
+      user_article_tags (id, tag, created_at)
     )
   `
     )
     .order("created_at", { ascending: false });
+
+  if (error) console.log("Error:", error);
 
   // Transform while maintaining existing Article type structure
   const articles: Article[] = (userArticles ?? []).map((ua) => ({
@@ -39,7 +42,13 @@ export default async function Home() {
     summary: ua.article.summary,
     created_at: ua.created_at,
     updated_at: ua.updated_at,
-    tags: ua.article.tags,
+    tags:
+      ua.article.user_article_tags
+        .sort(
+          (a: Tag, b: Tag) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
+        .map((tag: Tag) => tag.tag) ?? [],
     author: ua.article.author,
     has_read: ua.has_read,
     rating: ua.rating,

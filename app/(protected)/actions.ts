@@ -384,3 +384,33 @@ export async function addTag(articleId: string, tag: string) {
     return { success: false, error: (error as Error).message };
   }
 }
+
+export async function deleteTag(articleId: string, tag: string) {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User must be logged in to delete tags");
+    }
+
+    const { error } = await supabase.from("user_article_tags").delete().match({
+      user_id: user.id,
+      article_id: articleId,
+      tag: tag.toLowerCase().trim(),
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    revalidatePath("/");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting tag:", error);
+    return { success: false, error: (error as Error).message };
+  }
+}

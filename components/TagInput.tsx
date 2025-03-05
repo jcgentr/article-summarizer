@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { addTag } from "@/app/(protected)/actions";
+import { addTag, deleteTag } from "@/app/(protected)/actions";
 import { toast } from "sonner";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+import { CustomBadge } from "./CustomBadge";
 
 export function TagInput({
   articleId,
@@ -30,14 +30,29 @@ export function TagInput({
       setNewTag("");
       toast.success("Tag added successfully!");
     } else {
-      // Handle error, maybe show a toast notification
       console.error(result.error);
-      toast.error("Failed to add tag");
+      if (result.error?.includes("duplicate")) {
+        toast.error("Tag already exists");
+      } else {
+        toast.error("Failed to add tag");
+      }
+    }
+  };
+
+  const handleDeleteTag = async (tagToDelete: string) => {
+    const result = await deleteTag(articleId, tagToDelete);
+
+    if (result.success) {
+      setTags(tags.filter((tag) => tag !== tagToDelete));
+      toast.success("Tag deleted successfully!");
+    } else {
+      console.error(result.error);
+      toast.error("Failed to delete tag");
     }
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <form onSubmit={handleAddTag} className="flex items-center gap-1">
         <Input
           type="text"
@@ -50,14 +65,12 @@ export function TagInput({
       </form>
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <Badge
+          <CustomBadge
             key={tag}
-            variant="secondary"
-            onClick={() => handleTagClick(tag)}
-            className="text-sm cursor-pointer hover:underline bg-secondary/70 hover:bg-secondary/90 transition-colors px-3 py-1 rounded-full"
-          >
-            {tag}
-          </Badge>
+            tag={tag}
+            onDelete={handleDeleteTag}
+            onClick={handleTagClick}
+          />
         ))}
       </div>
     </div>

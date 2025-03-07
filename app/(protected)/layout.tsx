@@ -1,5 +1,6 @@
+import { AppSidebar } from "@/components/AppSidebar";
 import { FeedbackButton } from "@/components/FeedbackButton";
-import NavBar from "@/components/NavBar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -16,10 +17,13 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <>
-      <NavBar user={data.user} />
-      {children}
+    <SidebarProvider>
+      <AppSidebar user={data.user} />
+      <main className="w-full">
+        <SidebarTrigger className="sm:fixed sm:mx-2 sm:my-3" />
+        {children}
+      </main>
       <FeedbackButton />
-    </>
+    </SidebarProvider>
   );
 }

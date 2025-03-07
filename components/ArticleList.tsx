@@ -83,7 +83,7 @@ export function ArticleList({
 
   return (
     <>
-      <div className="sticky top-0 bg-background/80 backdrop-blur-sm z-10 pt-8 pb-4">
+      <div className="sticky top-0 bg-background/80 backdrop-blur-sm z-10 pt-3 pb-4">
         <AddForm />
         <div className="flex mt-4 gap-3 items-baseline">
           <Input

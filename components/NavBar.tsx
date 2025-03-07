@@ -43,12 +43,6 @@ export default async function NavBar({ user }: { user: User }) {
 
         <div className="flex gap-4 items-center">
           <nav className="flex items-center space-x-4">
-            {/* <Link
-              href="/"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              Home
-            </Link> */}
             <Link
               href="/leaderboard"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"

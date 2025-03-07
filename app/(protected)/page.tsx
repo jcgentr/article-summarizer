@@ -58,9 +58,8 @@ export default async function Home() {
   }));
 
   return (
-    <main className="max-w-2xl mx-auto px-4">
-      <h1 className="sr-only">Article Summaries</h1>
+    <div className="max-w-3xl mx-auto px-4">
       <ArticleList initialArticles={articles} />
-    </main>
+    </div>
   );
 }

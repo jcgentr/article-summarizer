@@ -1,14 +1,11 @@
 "use client";
 
 import {
-  Chrome,
-  CreditCard,
-  LogOut,
-  MessageSquare,
-  Settings,
-  Sparkles,
-  User,
-} from "lucide-react";
+  createCheckoutSession,
+  createPortalSession,
+  logout,
+} from "@/app/(protected)/actions";
+import { PlanType } from "@/app/(protected)/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,17 +15,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "./ui/button";
-import {
-  createCheckoutSession,
-  createPortalSession,
-  logout,
-} from "@/app/(protected)/actions";
-import { PlanType } from "@/app/(protected)/types";
-import Link from "next/link";
 import { useChromeExtension } from "@/lib/hooks/useChromeExtension";
 import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
+import {
+  ChevronUp,
+  Chrome,
+  CreditCard,
+  LogOut,
+  MessageSquare,
+  Settings,
+  Sparkles,
+  User,
+} from "lucide-react";
+import Link from "next/link";
 import { FeedbackForm } from "./FeedbackForm";
+import { SidebarMenuButton } from "./ui/sidebar";
 
 interface NavUserProps {
   email: string;
@@ -51,19 +52,13 @@ export function NavUser({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <SidebarMenuButton>
           <User className="h-5 w-5 flex-shrink-0" />
           <span className="hidden sm:inline truncate">{email}</span>
-        </Button>
+          <ChevronUp className="ml-auto" />
+        </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg">
-        <DropdownMenuLabel className="p-0 font-normal">
-          <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <User className="h-5 w-5 mr-1 flex-shrink-0" />
-            <span className="truncate">{email}</span>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuLabel className="px-2 py-1.5">
           <div className="space-y-1">
             <div className="flex items-center justify-between">

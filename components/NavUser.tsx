@@ -54,7 +54,7 @@ export function NavUser({
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton>
           <User className="h-5 w-5 flex-shrink-0" />
-          <span className="hidden sm:inline truncate">{email}</span>
+          <span className="truncate">{email}</span>
           <ChevronUp className="ml-auto" />
         </SidebarMenuButton>
       </DropdownMenuTrigger>

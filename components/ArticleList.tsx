@@ -17,8 +17,10 @@ const scrollToTop = () => {
 
 export function ArticleList({
   initialArticles,
+  currentTag,
 }: {
   initialArticles: Article[];
+  currentTag?: string;
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -84,7 +86,7 @@ export function ArticleList({
   return (
     <>
       <div className="sticky top-0 bg-background/80 backdrop-blur-sm z-10 pt-3 pb-4">
-        <AddForm />
+        <AddForm currentTag={currentTag} />
         <div className="flex mt-4 gap-3 items-baseline">
           <Input
             type="search"

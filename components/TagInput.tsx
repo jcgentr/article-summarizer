@@ -6,16 +6,18 @@ import { toast } from "sonner";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { CustomBadge } from "./CustomBadge";
+import { useRouter } from "next/navigation";
 
 export function TagInput({
   articleId,
   initialTags,
-  handleTagClick,
+  onSearchTag,
 }: {
   articleId: string;
   initialTags: string[];
-  handleTagClick: (tag: string) => void;
+  onSearchTag: (tag: string) => void;
 }) {
+  const router = useRouter();
   const [tags, setTags] = useState(initialTags);
   const [newTag, setNewTag] = useState("");
 
@@ -36,6 +38,18 @@ export function TagInput({
       } else {
         toast.error("Failed to add tag");
       }
+    }
+  };
+
+  const handleTagClick = (event: React.MouseEvent, tag: string) => {
+    console.log(event);
+    if (event.ctrlKey || event.metaKey) {
+      // Ctrl+Click (or Cmd+Click on Mac) to search on current page
+      event.preventDefault();
+      onSearchTag(tag);
+    } else {
+      // Regular click navigates to tag page
+      router.push(`/tags/${encodeURIComponent(tag)}`);
     }
   };
 

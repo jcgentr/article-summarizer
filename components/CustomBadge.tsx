@@ -1,10 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
+import React from "react";
 
 interface CustomBadgeProps {
   tag: string;
   onDelete: (tag: string) => void;
-  onClick: (tag: string) => void;
+  onClick: (e: React.MouseEvent, tag: string) => void;
 }
 
 export function CustomBadge({ tag, onDelete, onClick }: CustomBadgeProps) {
@@ -13,7 +14,7 @@ export function CustomBadge({ tag, onDelete, onClick }: CustomBadgeProps) {
       variant="secondary"
       className="text-sm cursor-pointer hover:bg-secondary/90 transition-colors px-3 py-1 rounded-full relative group"
     >
-      <span className="hover:underline" onClick={() => onClick(tag)}>
+      <span className="hover:underline" onClick={(e) => onClick(e, tag)}>
         {tag}
       </span>
       <button

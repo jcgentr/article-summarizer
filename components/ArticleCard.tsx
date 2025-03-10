@@ -127,7 +127,7 @@ export function ArticleCard({
           <TagInput
             articleId={id}
             initialTags={tags}
-            handleTagClick={handleTagClick}
+            onSearchTag={handleTagClick}
           />
         </div>
       </CardContent>

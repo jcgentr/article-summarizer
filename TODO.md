@@ -55,10 +55,10 @@
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
 - [ ] reach out to True Crime podcasters to see if Gistr would help them
-- [ ] research SEO boosting techniques (get to Google's front page of "summarize articles")
 
 # Doing
 
+- [ ] research SEO boosting techniques (get to Google's front page of "summarize articles")
 - [ ] start Gistr Twitter page
   - [ ] could we do a summary a day on Twitter page? make it viral
   - [ ] summaries of followers' articles posted
@@ -69,6 +69,8 @@
 
 # Done
 
+- [x] transition to sidebar
+- [x] add tags to sidebar
 - [x] Custom tag feature
   - [x] Add ability to create and assign custom tags to articles
   - [x] Implement tag management interface (add and delete tags)
@@ -127,8 +129,6 @@
 - [x] capture title and author if they exists
 
 # Pre-launch
-
-- [ ] read and complete: https://docs.stripe.com/billing/testing
 
 - [x] prep for each launch
 - [x] enable Vercel analytics on demo, landing, and main app

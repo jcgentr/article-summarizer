@@ -48,7 +48,7 @@ function URLInput() {
   );
 }
 
-export function AddForm() {
+export function AddForm({ currentTag }: { currentTag: string | undefined }) {
   // useActionState is available with React 19 (Next.js App Router)
   const [state, formAction] = useActionState(
     createArticleSummary,
@@ -84,6 +84,7 @@ export function AddForm() {
     <form action={formAction}>
       <div className="flex gap-2">
         <URLInput />
+        <input type="hidden" name="currentTag" value={currentTag || ""} />
         <SubmitButton />
       </div>
       <p aria-live="polite" className="sr-only" role="status">

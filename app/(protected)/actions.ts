@@ -28,6 +28,7 @@ export async function createArticleSummary(
     }
 
     const url = formData.get("url") as string;
+    const currentTag = formData.get("currentTag") as string;
 
     // First check if article already exists
     const { data: existingArticle } = await supabase
@@ -46,6 +47,37 @@ export async function createArticleSummary(
         .single();
 
       if (existingUserArticle) {
+        // User has already saved this article, but we still want to add the new tag if provided
+        if (currentTag) {
+          const { data: existingTag } = await supabase
+            .from("user_article_tags")
+            .select()
+            .eq("user_id", user.id)
+            .eq("article_id", existingArticle.id)
+            .eq("tag", currentTag)
+            .single();
+
+          if (!existingTag) {
+            // Tag doesn't exist for this article, so add it
+            const { error: tagInsertError } = await supabase
+              .from("user_article_tags")
+              .insert({
+                user_id: user.id,
+                article_id: existingArticle.id,
+                tag: currentTag,
+              });
+
+            if (tagInsertError) {
+              throw new Error(
+                `Failed to add new tag: ${tagInsertError.message}`
+              );
+            }
+
+            return {
+              message: `Added new tag "${currentTag}" to existing article`,
+            };
+          }
+        }
         return { message: "You've already saved this article" };
       }
 
@@ -61,8 +93,27 @@ export async function createArticleSummary(
         throw new Error(`Supabase error: ${userArticleError.message}`);
       }
 
+      // Add the currentTag if it exists
+      if (currentTag) {
+        const { error: tagError } = await supabase
+          .from("user_article_tags")
+          .insert({
+            user_id: user.id,
+            article_id: existingArticle.id,
+            tag: currentTag,
+          });
+
+        if (tagError) {
+          throw new Error(`Failed to add tag: ${tagError.message}`);
+        }
+      }
+
       revalidatePath("/");
-      return { message: "Added existing article summary" };
+      return {
+        message: currentTag
+          ? `Added existing article summary with tag: ${currentTag}`
+          : "Added existing article summary",
+      };
     }
 
     // Check user's plan and summary limit
@@ -160,6 +211,20 @@ export async function createArticleSummary(
       throw new Error(`Supabase error: ${userArticleError.message}`);
     }
 
+    if (currentTag) {
+      const { error: tagError } = await supabase
+        .from("user_article_tags")
+        .insert({
+          user_id: user.id,
+          article_id: newArticle.id,
+          tag: currentTag,
+        });
+
+      if (tagError) {
+        console.error(`Failed to add tag: ${tagError.message}`);
+      }
+    }
+
     await supabase
       .from("user_metadata")
       .update({
@@ -168,14 +233,18 @@ export async function createArticleSummary(
       .eq("user_id", user.id);
 
     revalidatePath("/");
-    return { message: "Added article summary" };
+    return {
+      message: currentTag
+        ? `Added article summary with tag: ${currentTag}`
+        : "Added article summary",
+    };
   } catch (error) {
     console.error(error);
     return { message: "Failed to create article summary" };
   }
 }
 
-export async function deleteArticleSummary(id: string) {
+export async function deleteArticle(id: string) {
   try {
     const supabase = await createClient();
     const {
@@ -186,15 +255,17 @@ export async function deleteArticleSummary(id: string) {
       throw new Error("User must be logged in to delete summaries");
     }
 
-    // Only delete the user_articles entry, keep the article in articles table
-    const { error } = await supabase
-      .from("user_articles")
-      .delete()
-      .eq("article_id", id)
-      .eq("user_id", user.id);
+    // Start a transaction
+    const { error: transactionError } = await supabase.rpc(
+      "delete_article_and_tags",
+      {
+        p_article_id: id,
+        p_user_id: user.id,
+      }
+    );
 
-    if (error) {
-      throw new Error(`Supabase error: ${error.message}`);
+    if (transactionError) {
+      throw new Error(`Transaction error: ${transactionError.message}`);
     }
 
     revalidatePath("/");

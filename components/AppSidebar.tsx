@@ -20,6 +20,8 @@ import { createClient } from "@/utils/supabase/server";
 import { User } from "@supabase/supabase-js";
 import { SUMMARY_LIMITS } from "@/lib/billing";
 import { ModeToggle } from "./ModeToggle";
+import { Suspense } from "react";
+import { TagsSidebar } from "./TagsSidebar";
 
 // Menu items.
 const items = [
@@ -43,6 +45,17 @@ const DEFAULT_USER_METADATA: Pick<
   summaries_generated: 0,
   stripe_customer_id: null,
 } as const;
+
+function TagsSidebarFallback() {
+  return (
+    <SidebarMenuItem key="tags">
+      <div className="flex items-center justify-between w-full">
+        <span>Tags</span>
+        <span className="text-sm text-muted-foreground">Loading...</span>
+      </div>
+    </SidebarMenuItem>
+  );
+}
 
 export async function AppSidebar({ user }: { user: User }) {
   const supabase = await createClient();
@@ -78,13 +91,30 @@ export async function AppSidebar({ user }: { user: User }) {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="pl-2 pr-1">
+              {/* <SidebarMenuItem key="projects">
+                <div className="flex items-center justify-between w-full">
+                  <span className="font-bold">Projects</span>
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </SidebarMenuItem> */}
+              <Suspense fallback={<TagsSidebarFallback />}>
+                <TagsSidebar />
+              </Suspense>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

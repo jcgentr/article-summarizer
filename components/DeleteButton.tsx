@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { deleteArticleSummary } from "../app/(protected)/actions";
+import { deleteArticle } from "../app/(protected)/actions";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -22,7 +22,7 @@ export function DeleteButton({ id }: DeleteButtonProps) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const { message } = await deleteArticleSummary(id);
+      const { message } = await deleteArticle(id);
       toast.success(message);
     } catch (error) {
       console.error("Failed to delete article:", error);

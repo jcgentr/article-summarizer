@@ -76,7 +76,7 @@ You can access and update your account information through the Gistr web applica
 
 ### b. Data Deletion
 
-You may request the deletion of your account and associated data by contacting us at contact@getgistr.com.
+You may request the deletion of your account and associated data by contacting us at jcgentr@icloud.com.
 
 ### c. Cookie Preferences
 
@@ -94,7 +94,7 @@ We may update this Privacy Policy from time to time. Any changes will be posted 
 
 If you have any questions or concerns about this Privacy Policy, please contact us at:
 
-**Email:** contact@getgistr.com
+**Email:** jcgentr@icloud.com
 
 **Mailing Address:** 309 Laurel Oak Ct., Spartanburg, SC, 29306
 

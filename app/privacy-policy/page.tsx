@@ -183,8 +183,8 @@ export default function PrivacyPolicy() {
           <p className="text-lg">
             You may request the deletion of your account and associated data by
             contacting us at{" "}
-            <a href="mailto:contact@getgistr.com" className="hover:underline">
-              contact@getgistr.com
+            <a href="mailto:jcgentr@icloud.com" className="hover:underline">
+              jcgentr@icloud.com
             </a>
             .
           </p>
@@ -220,8 +220,8 @@ export default function PrivacyPolicy() {
         </p>
         <p className="text-lg">
           <strong>Email:</strong>{" "}
-          <a href="mailto:contact@getgistr.com" className="hover:underline">
-            contact@getgistr.com
+          <a href="mailto:jcgentr@icloud.com" className="hover:underline">
+            jcgentr@icloud.com
           </a>
         </p>
         <p className="text-lg">

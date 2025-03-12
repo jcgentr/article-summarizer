@@ -1,6 +1,6 @@
-import Link from "next/link";
+import { SidebarMenuItem } from "@/components/ui/sidebar";
 import { createClient } from "@/utils/supabase/server";
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { TagsList } from "./TagsList";
 
 async function getTags() {
   const supabase = await createClient();
@@ -36,21 +36,7 @@ export async function TagsSidebar() {
           <span className="font-bold">Tags</span>
         </div>
       </SidebarMenuItem>
-      {tags.map(({ tag, count }) => (
-        <SidebarMenuItem key={tag}>
-          <SidebarMenuButton
-            asChild
-            className="flex items-center justify-between"
-          >
-            <Link href={`/tags/${encodeURIComponent(tag)}`}>
-              <span className="text-sm">{tag}</span>
-              <span className="text-sm text-muted-foreground font-mono">
-                {count}
-              </span>
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      ))}
+      <TagsList tags={tags} />
     </>
   );
 }

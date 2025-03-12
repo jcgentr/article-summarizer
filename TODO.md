@@ -22,6 +22,7 @@
 - [ ] On title hover show preview of site
 - [ ] Add OG image next to title
 - [ ] Save parse errors to database
+- [ ] investigate how much ElevenLabs TTS would cost per article
 
 # Performance
 
@@ -46,6 +47,7 @@
 - [ ] add onboarding instructions to first time users (https://www.onborda.dev/)
   - [ ] initial modal for demo and free users telling them of usage limits
 - [ ] investigate why so many summaries are not parsed
+- [ ] add keyboard shortcuts help
 
 # Marketing & Branding
 
@@ -55,6 +57,7 @@
 - [ ] improve chrome extension page
 - [ ] add Share feature on summary card (copy Glasp)
 - [ ] reach out to True Crime podcasters to see if Gistr would help them
+- [ ] add Feedback div like same.dev after X account is created
 
 # Doing
 

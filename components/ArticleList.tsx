@@ -17,10 +17,12 @@ const scrollToTop = () => {
 
 export function ArticleList({
   initialArticles,
+  allTags,
   currentTag,
 }: {
   initialArticles: Article[];
   currentTag?: string;
+  allTags: string[];
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -75,12 +77,13 @@ export function ArticleList({
             <ArticleCard
               {...article}
               handleTagClick={(tag: string) => setSearchTerm(tag)}
+              allTags={allTags}
             />
           </li>
         ))}
       </ul>
     ),
-    [sortedArticles]
+    [sortedArticles, allTags]
   );
 
   return (

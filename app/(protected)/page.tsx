@@ -31,7 +31,13 @@ export default async function Home() {
     )
     .order("created_at", { ascending: false });
 
-  if (error) console.log("Error:", error);
+  if (error) console.log("Error fetching user articles:", error);
+
+  const { data: allTagsData, error: tagsError } = await supabase
+    .from("user_article_tags")
+    .select("tag");
+
+  if (tagsError) console.log("Error fetching tags:", tagsError);
 
   // Transform while maintaining existing Article type structure
   const articles: Article[] = (userArticles ?? []).map((ua) => ({
@@ -57,9 +63,11 @@ export default async function Home() {
     read_time: Math.ceil(ua.article.word_count / 238), // Assuming 238 words per minute reading speed for adults reading non-fiction
   }));
 
+  const allTags = [...new Set(allTagsData?.map((tag) => tag.tag) ?? [])];
+
   return (
     <div className="max-w-3xl mx-auto px-4">
-      <ArticleList initialArticles={articles} />
+      <ArticleList initialArticles={articles} allTags={allTags} />
     </div>
   );
 }

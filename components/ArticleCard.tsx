@@ -35,10 +35,12 @@ export function ArticleCard({
   has_read,
   rating,
   tags,
+  allTags,
   formatted_content,
   handleTagClick,
 }: Article & {
   handleTagClick: (tag: string) => void;
+  allTags: string[];
 }) {
   return (
     <Card className="w-full">
@@ -127,6 +129,7 @@ export function ArticleCard({
           <TagInput
             articleId={id}
             initialTags={tags}
+            allTags={allTags}
             onSearchTag={handleTagClick}
           />
         </div>

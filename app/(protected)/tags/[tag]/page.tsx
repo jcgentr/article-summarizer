@@ -40,7 +40,7 @@ export default async function TagPage({
 
   const { data: allTagsData, error: tagsError } = await supabase
     .from("user_article_tags")
-    .select("tag");
+    .select("tag, created_at");
 
   if (tagsError) console.log("Error fetching tags:", tagsError);
 
@@ -70,7 +70,16 @@ export default async function TagPage({
     }))
     .filter((article) => article.tags.includes(decodedTag));
 
-  const allTags = [...new Set(allTagsData?.map((tag) => tag.tag) ?? [])];
+  const allTags = [
+    ...new Set(
+      allTagsData
+        ?.sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
+        .map((tag) => tag.tag) ?? []
+    ),
+  ];
 
   return (
     <div className="max-w-3xl mx-auto px-4">

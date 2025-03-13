@@ -30,6 +30,7 @@ export function TagInput({
   const [tags, setTags] = useState(initialTags);
   const [newTag, setNewTag] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Filter available tags based on input
@@ -82,11 +83,13 @@ export function TagInput({
       } else {
         toast.error("Failed to add tag");
       }
+      inputRef.current?.focus();
     }
   };
 
   const handleAddTag = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    inputRef.current?.blur();
     handleAddTagByName(newTag);
   };
 
@@ -107,6 +110,7 @@ export function TagInput({
       <form onSubmit={handleAddTag} className="flex items-center gap-1">
         <div className="relative w-36">
           <Input
+            ref={inputRef}
             type="text"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}

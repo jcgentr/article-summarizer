@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://getgistr.com
+
+# Sitemaps
+Sitemap: https://getgistr.com/sitemap.xml

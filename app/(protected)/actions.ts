@@ -175,8 +175,8 @@ export async function createArticleSummary(
       throw new Error("Failed to parse article");
     }
 
-    const wordCount = article.textContent.trim().split(/\s+/).length;
-    const cleanContent = article.textContent.replace(/\s+/g, " ").trim();
+    const wordCount = article.textContent?.trim().split(/\s+/).length || 0;
+    const cleanContent = article.textContent?.replace(/\s+/g, " ").trim() || "";
     const result = await generateSummary(cleanContent, wordCount);
 
     // Insert into articles table

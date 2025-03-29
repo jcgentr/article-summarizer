@@ -61,10 +61,7 @@
 
 # Doing
 
-- [ ] research SEO boosting techniques (get to Google's front page of "summarize articles")
-- [ ] start Gistr Twitter page
-  - [ ] could we do a summary a day on Twitter page? make it viral
-  - [ ] summaries of followers' articles posted
+- [ ] switch to Gemini 2.0 Flash (free tier)
 - [ ] Project folders to hold summaries together (like Todoist My Projects)
   - [ ] Implement project creation and management
   - [ ] Allow users to assign articles/summaries to projects
@@ -72,6 +69,9 @@
 
 # Done
 
+- [x] research SEO boosting techniques (get to Google's front page of "summarize articles")
+- [x] start Gistr Twitter page
+  - [x] could we do a summary a day on Twitter page? make it viral
 - [x] transition to sidebar
 - [x] add tags to sidebar
 - [x] Custom tag feature

@@ -77,7 +77,6 @@ export async function signInWithGithub() {
     return { message: `${error.message}` };
   }
 
-  console.log("GitHub login initiated", data.url);
   redirect(data.url ?? "/");
 }
 
@@ -95,6 +94,5 @@ export async function signInWithGoogle() {
     return { message: `${error.message}` };
   }
 
-  console.log("Google login initiated", data.url);
   redirect(data.url ?? "/");
 }

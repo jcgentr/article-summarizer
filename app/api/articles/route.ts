@@ -1,5 +1,5 @@
 import { PlanType } from "@/app/(protected)/types";
-import { generateSummary } from "@/lib/ai";
+import { generateSummaryGemini } from "@/lib/ai";
 import { SUMMARY_LIMITS } from "@/lib/billing";
 import { shouldResetBillingCycle } from "@/lib/billing";
 import { createClient } from "@/utils/supabase/server";
@@ -186,7 +186,7 @@ export async function POST(request: Request) {
 
     const wordCount = article.textContent?.trim().split(/\s+/).length || 0;
     const cleanContent = article.textContent?.replace(/\s+/g, " ").trim() || "";
-    const result = await generateSummary(cleanContent, wordCount);
+    const result = await generateSummaryGemini(cleanContent, wordCount);
 
     // Insert into articles table
     const { data: newArticle, error: articleError } = await supabase

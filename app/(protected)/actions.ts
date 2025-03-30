@@ -4,7 +4,7 @@ import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
-import { generateSummary } from "@/lib/ai";
+import { generateSummaryGemini } from "@/lib/ai";
 import { redirect } from "next/navigation";
 import { shouldResetBillingCycle, SUMMARY_LIMITS } from "@/lib/billing";
 import { PlanType } from "./types";
@@ -177,7 +177,7 @@ export async function createArticleSummary(
 
     const wordCount = article.textContent?.trim().split(/\s+/).length || 0;
     const cleanContent = article.textContent?.replace(/\s+/g, " ").trim() || "";
-    const result = await generateSummary(cleanContent, wordCount);
+    const result = await generateSummaryGemini(cleanContent, wordCount);
 
     // Insert into articles table
     const { data: newArticle, error: articleError } = await supabase

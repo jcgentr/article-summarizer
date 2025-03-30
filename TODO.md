@@ -61,7 +61,6 @@
 
 # Doing
 
-- [ ] switch to Gemini 2.0 Flash (free tier)
 - [ ] Project folders to hold summaries together (like Todoist My Projects)
   - [ ] Implement project creation and management
   - [ ] Allow users to assign articles/summaries to projects
@@ -69,6 +68,7 @@
 
 # Done
 
+- [x] switch to Gemini 2.0 Flash (free tier)
 - [x] research SEO boosting techniques (get to Google's front page of "summarize articles")
 - [x] start Gistr Twitter page
   - [x] could we do a summary a day on Twitter page? make it viral

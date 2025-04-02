@@ -104,7 +104,7 @@ export default async function AccountPage({
 
   // Default account view (when no success/canceled params)
   return (
-    <div className="container max-w-6xl py-8 mx-auto">
+    <div className="container max-w-2xl py-8 px-4 mx-auto">
       <Card>
         <CardHeader>
           <CardTitle>Account Details</CardTitle>
@@ -134,7 +134,7 @@ export default async function AccountPage({
               {new Date(metadata.billing_cycle_start).toLocaleDateString()}
             </p>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-wrap gap-2">
             {metadata.stripe_customer_id && (
               <form action={createPortalSession}>
                 <Button type="submit" variant="outline">

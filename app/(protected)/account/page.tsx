@@ -92,7 +92,9 @@ export default async function AccountPage({
                   you&apos;re ready.
                 </p>
                 <Link href="/" passHref>
-                  <Button className="w-full">Return to Homepage</Button>
+                  <Button className="w-full" variant="outline">
+                    Return to Homepage
+                  </Button>
                 </Link>
               </>
             )}
@@ -137,13 +139,11 @@ export default async function AccountPage({
           <div className="flex justify-between flex-wrap gap-2">
             {metadata.stripe_customer_id && (
               <form action={createPortalSession}>
-                <Button type="submit" variant="outline">
-                  Manage Billing
-                </Button>
+                <Button type="submit">Manage Billing</Button>
               </form>
             )}
             <Link href="/" passHref>
-              <Button>Return to Homepage</Button>
+              <Button variant="outline">Return to Homepage</Button>
             </Link>
           </div>
         </CardContent>

@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/AppSidebar";
 import { FeedbackButton } from "@/components/FeedbackButton";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -19,9 +19,10 @@ export default async function ProtectedLayout({
   return (
     <SidebarProvider>
       <AppSidebar user={data.user} />
-      <main className="w-full">
-        <SidebarTrigger className="sm:fixed sm:mx-2 sm:my-3" />
-        {children}
+      <main className="w-full flex flex-col">
+        {/* Header area that maintains space for trigger */}
+        <div className="h-14 px-4 md:h-16 md:px-6 bg-background" />
+        <div className="flex-1">{children}</div>
       </main>
       <FeedbackButton />
     </SidebarProvider>

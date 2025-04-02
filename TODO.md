@@ -61,6 +61,7 @@
 
 # Doing
 
+- [ ] fix collapsed sidebar trigger on mobile overlapping on scroll
 - [ ] Project folders to hold summaries together (like Todoist My Projects)
   - [ ] Implement project creation and management
   - [ ] Allow users to assign articles/summaries to projects
@@ -68,6 +69,7 @@
 
 # Done
 
+- [x] move close/open sidebar button into sidebar or improve zIndex and position on scaling down
 - [x] switch to Gemini 2.0 Flash (free tier)
 - [x] research SEO boosting techniques (get to Google's front page of "summarize articles")
 - [x] start Gistr Twitter page

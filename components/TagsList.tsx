@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 interface Tag {
@@ -10,8 +14,13 @@ interface Tag {
   count: number;
 }
 
-export function TagsList({ tags }: { tags: Tag[] }) {
+interface TagsListProps {
+  tags: Tag[];
+}
+
+export function TagsList({ tags }: TagsListProps) {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   return (
     <>
@@ -27,7 +36,7 @@ export function TagsList({ tags }: { tags: Tag[] }) {
                 "bg-accent text-accent-foreground font-medium": isActive,
               })}
             >
-              <Link href={tagPath}>
+              <Link href={tagPath} onClick={() => setOpenMobile(false)}>
                 <span className="text-sm">{tag}</span>
                 <span className="text-sm text-muted-foreground font-mono">
                   {count}

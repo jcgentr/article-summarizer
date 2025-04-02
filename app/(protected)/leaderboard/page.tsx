@@ -63,7 +63,7 @@ export default async function Leaderboard() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+    <div className="max-w-4xl mx-auto px-4 pb-8 space-y-12">
       <div>
         <h2 className="text-2xl font-bold mb-4">Top Rated Articles</h2>
         <div className="overflow-x-auto">

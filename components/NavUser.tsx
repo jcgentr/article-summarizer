@@ -6,6 +6,7 @@ import {
   logout,
 } from "@/app/(protected)/actions";
 import { PlanType } from "@/app/(protected)/types";
+import { SUMMARY_LIMITS } from "@/lib/billing";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useChromeExtension } from "@/lib/hooks/useChromeExtension";
 import { useThemeShortcut } from "@/lib/hooks/useThemeShortcut";
+import { useSidebar } from "@/components/ui/sidebar";
 import {
   ChevronUp,
   Chrome,
@@ -28,26 +30,51 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 import { FeedbackForm } from "./FeedbackForm";
 import { SidebarMenuButton } from "./ui/sidebar";
 
 interface NavUserProps {
   email: string;
-  planType: PlanType;
-  stripeCustomerId: string | null;
-  summariesGenerated: number;
-  summaryLimit: number;
+  userId: string;
 }
 
-export function NavUser({
-  email,
-  planType,
-  stripeCustomerId,
-  summariesGenerated,
-  summaryLimit,
-}: NavUserProps) {
+const DEFAULT_USER_METADATA = {
+  plan_type: "free" as PlanType,
+  summaries_generated: 0,
+  stripe_customer_id: null,
+} as const;
+
+export function NavUser({ email, userId }: NavUserProps) {
   useThemeShortcut();
   useChromeExtension();
+  const { setOpenMobile } = useSidebar();
+
+  const [metadata, setMetadata] = useState<typeof DEFAULT_USER_METADATA>(
+    DEFAULT_USER_METADATA
+  );
+
+  useEffect(() => {
+    async function fetchUserMetadata() {
+      const supabase = createClient();
+      const { data: userMetadata } = await supabase
+        .from("user_metadata")
+        .select("plan_type, summaries_generated, stripe_customer_id")
+        .eq("user_id", userId)
+        .single();
+
+      if (userMetadata) {
+        setMetadata(userMetadata);
+      }
+    }
+
+    fetchUserMetadata();
+  }, [userId]);
+
+  const handleMenuItemClick = () => {
+    setOpenMobile(false);
+  };
 
   return (
     <DropdownMenu>
@@ -64,13 +91,14 @@ export function NavUser({
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Plan</span>
               <span className="text-sm font-medium">
-                {planType === "free" ? "Free" : "Pro"}
+                {metadata.plan_type === "free" ? "Free" : "Pro"}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Usage</span>
               <span className="text-sm font-medium">
-                {summariesGenerated} / {summaryLimit}
+                {metadata.summaries_generated} /{" "}
+                {SUMMARY_LIMITS[metadata.plan_type]}
               </span>
             </div>
           </div>
@@ -78,14 +106,18 @@ export function NavUser({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/account" className="flex items-center cursor-pointer">
+            <Link
+              href="/account"
+              className="flex items-center cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
               <Settings className="h-5 w-5 mr-1 flex-shrink-0" />
               Account
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        {planType === "free" && (
+        {metadata.plan_type === "free" && (
           <>
             <DropdownMenuGroup>
               <form action={createCheckoutSession}>
@@ -93,6 +125,7 @@ export function NavUser({
                   asChild
                   onSelect={(e) => {
                     e.preventDefault();
+                    handleMenuItemClick();
                   }}
                 >
                   <button className="w-full flex items-center cursor-pointer">
@@ -105,7 +138,7 @@ export function NavUser({
             <DropdownMenuSeparator />
           </>
         )}
-        {stripeCustomerId && (
+        {metadata.stripe_customer_id && (
           <>
             <DropdownMenuGroup>
               <form action={createPortalSession}>
@@ -113,6 +146,7 @@ export function NavUser({
                   asChild
                   onSelect={(e) => {
                     e.preventDefault();
+                    handleMenuItemClick();
                   }}
                 >
                   <button className="w-full flex items-center cursor-pointer">
@@ -131,6 +165,7 @@ export function NavUser({
               href="https://chromewebstore.google.com/detail/gistr/ncjimfkmindojmhmempanidjnlfjhfoo"
               target="_blank"
               className="flex items-center cursor-pointer"
+              onClick={handleMenuItemClick}
             >
               <Chrome className="h-5 w-5 mr-1 flex-shrink-0" />
               Chrome Extension
@@ -139,7 +174,12 @@ export function NavUser({
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              handleMenuItemClick();
+            }}
+          >
             <FeedbackForm>
               <div className="w-full flex items-center cursor-pointer gap-2">
                 <MessageSquare className="h-4 w-4 mr-1 flex-shrink-0" />
@@ -154,6 +194,7 @@ export function NavUser({
             asChild
             onSelect={(e) => {
               e.preventDefault();
+              handleMenuItemClick();
             }}
           >
             <button className="w-full cursor-pointer">

@@ -83,7 +83,7 @@ export default async function TagPage({
 
   return (
     <div className="max-w-3xl mx-auto px-4">
-      <h1 className="text-2xl font-bold mt-4">
+      <h1 className="text-2xl font-bold">
         Articles tagged with &quot;{decodedTag}&quot;
       </h1>
       <ArticleList

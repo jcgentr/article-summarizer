@@ -27,7 +27,7 @@ export function PrintableArticle({
 
   return (
     <article className="print-article max-w-3xl mx-auto pb-8">
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-4">
         <Button onClick={handlePrint}>Print</Button>
       </div>
       <h1 className="text-3xl font-bold mb-4">{title}</h1>

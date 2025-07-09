@@ -96,18 +96,35 @@ body {
   }
 
   /* Hide all other elements when printing */
-  body > *:not(.print-article) {
+  body > div:not(:has(.print-article)),
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Hide all buttons when printing */
+  button,
+  .button,
+  [role="button"],
+  .print-article button {
     display: none !important;
   }
 
   /* Print article styles */
   .print-article {
     display: block !important;
-    padding: 2cm !important;
+    padding: 0cm 1cm !important;
     max-width: none !important;
     margin: 0 !important;
     font-size: 12pt !important;
     line-height: 1.5 !important;
+  }
+
+  .print-article,
+  .print-content,
+  .print-content * {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   /* Typography improvements */

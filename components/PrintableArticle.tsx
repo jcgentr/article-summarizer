@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import { Button } from "./ui/button";
 
 interface PrintableArticleProps {
   title: string;
@@ -17,12 +18,18 @@ export function PrintableArticle({
   content,
 }: PrintableArticleProps) {
   useEffect(() => {
-    // Auto-print when the component mounts
     window.print();
   }, []);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <article className="print-article max-w-3xl mx-auto p-8">
+    <article className="print-article max-w-3xl mx-auto pb-8">
+      <div className="flex justify-end">
+        <Button onClick={handlePrint}>Print</Button>
+      </div>
       <h1 className="text-3xl font-bold mb-4">{title}</h1>
       <div className="flex justify-between flex-wrap gap-2 text-muted-foreground mb-8">
         {author && <div>{author}</div>}

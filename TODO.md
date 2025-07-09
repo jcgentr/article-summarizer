@@ -61,6 +61,7 @@
 
 # Doing
 
+- [ ] add chat to chrome extension
 - [ ] fix collapsed sidebar trigger on mobile overlapping on scroll
 - [ ] Project folders to hold summaries together (like Todoist My Projects)
   - [ ] Implement project creation and management

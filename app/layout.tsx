@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://app.getgistr.com"),
   title: `Gistr${process.env.NODE_ENV === "development" ? " | Dev" : ""}`,
   description:
     "Transform lengthy web articles into clear, concise summaries with AI. Save time and stay informed with Gistr's Chrome extension and web app.",

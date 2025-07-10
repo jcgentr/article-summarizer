@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
 import { Button } from "./ui/button";
 
 interface PrintableArticleProps {
@@ -17,10 +16,6 @@ export function PrintableArticle({
   published_time,
   content,
 }: PrintableArticleProps) {
-  useEffect(() => {
-    window.print();
-  }, []);
-
   const handlePrint = () => {
     window.print();
   };

@@ -115,8 +115,8 @@ body {
     padding: 0cm 1cm !important;
     max-width: none !important;
     margin: 0 !important;
-    font-size: 12pt !important;
-    line-height: 1.5 !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
   }
 
   .print-article,
@@ -129,14 +129,20 @@ body {
 
   /* Typography improvements */
   .print-article h1 {
-    font-size: 24pt !important;
-    margin-bottom: 1cm !important;
+    font-size: 18pt !important;
+    margin-bottom: 0.8cm !important;
   }
 
   .print-article h2 {
-    font-size: 18pt !important;
-    margin-top: 1cm !important;
-    margin-bottom: 0.5cm !important;
+    font-size: 14pt !important;
+    margin-top: 0.8cm !important;
+    margin-bottom: 0.4cm !important;
+  }
+
+  .print-article h3 {
+    font-size: 12pt !important;
+    margin-top: 0.6cm !important;
+    margin-bottom: 0.3cm !important;
   }
 
   /* Ensure links are readable */
@@ -147,15 +153,16 @@ body {
 
   /* Paragraph spacing */
   .print-article p {
-    margin-bottom: 1em !important;
-    line-height: 1.6 !important;
+    margin-bottom: 0.8em !important;
+    line-height: 1.5 !important;
+    font-size: 10pt !important;
   }
 
   /* Add extra space between sections */
   .print-article h1 + p,
   .print-article h2 + p,
   .print-article h3 + p {
-    margin-top: 0.5cm !important;
+    margin-top: 0.3cm !important;
   }
 
   /* Ensure last elements don't have extra margin */
@@ -165,7 +172,7 @@ body {
 
   /* Handle consecutive paragraphs */
   .print-article p + p {
-    margin-top: 1em !important;
+    margin-top: 0.8em !important;
   }
 
   /* Remove any fixed positioning */

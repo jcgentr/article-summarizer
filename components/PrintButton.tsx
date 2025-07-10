@@ -17,7 +17,7 @@ export function PrintButton({ id }: PrintButtonProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link href={`/print/${id}`} target="_blank">
+          <Link href={`/print/${id}`}>
             <Button
               variant="outline"
               size="sm"

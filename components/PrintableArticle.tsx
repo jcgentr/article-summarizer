@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
+import { ArrowUp } from "lucide-react";
 
 interface PrintableArticleProps {
   title: string;
@@ -19,6 +21,8 @@ export function PrintableArticle({
   const handlePrint = () => {
     window.print();
   };
+
+  const { showScrollTop, scrollToTop } = useScrollToTop();
 
   return (
     <article className="print-article max-w-3xl mx-auto pb-8">
@@ -50,6 +54,17 @@ export function PrintableArticle({
         )}
         dangerouslySetInnerHTML={{ __html: content }}
       />
+
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-4 md:bottom-12 md:right-16 rounded-full p-3 h-auto"
+          size="icon"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      )}
     </article>
   );
 }

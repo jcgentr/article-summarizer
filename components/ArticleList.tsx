@@ -1,7 +1,7 @@
 "use client";
 
 import { Article } from "@/app/(protected)/types";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { AddForm } from "./AddForm";
 import { ArticleCard } from "./ArticleCard";
@@ -10,10 +10,7 @@ import { Button } from "./ui/button";
 import { SORT_OPTIONS, SortDropdown, SortOption } from "./SortDropdown";
 import FilterDropdown, { FILTER_OPTIONS, FilterId } from "./FilterDropdown";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "auto" });
-};
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export function ArticleList({
   initialArticles,
@@ -25,10 +22,10 @@ export function ArticleList({
   allTags: string[];
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [sortValue, setSortValue] = useState<SortOption>("Newest first");
   const [selectedFilter, setSelectedFilter] = useState<FilterId>("none");
   const debouncedSearch = useDebouncedValue(searchTerm, 300);
+  const { showScrollTop, scrollToTop } = useScrollToTop();
 
   // First filter
   const searchFilteredArticles = useMemo(
@@ -58,16 +55,6 @@ export function ArticleList({
     () => SORT_OPTIONS[sortValue](filteredArticles),
     [filteredArticles, sortValue]
   );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show button when user scrolls down 400px
-      setShowScrollTop(window.scrollY > 400);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const articleList = useMemo(
     () => (

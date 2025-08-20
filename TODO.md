@@ -70,6 +70,8 @@
 
 # Done
 
+- [x] add option to not print images on print page
+- [x] add scroll to top button to print page
 - [x] fix broken links / buttons on sidenav on print pages
 - [x] move close/open sidebar button into sidebar or improve zIndex and position on scaling down
 - [x] switch to Gemini 2.0 Flash (free tier)

@@ -192,4 +192,12 @@ body {
   img {
     page-break-inside: avoid;
   }
+
+  .hide-images img {
+    display: none !important;
+  }
+}
+
+.hide-images img {
+  display: none;
 }

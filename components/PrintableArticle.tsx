@@ -4,6 +4,13 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 import { ArrowUp } from "lucide-react";
+import { useState } from "react";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
+
+const handlePrint = () => {
+  window.print();
+};
 
 interface PrintableArticleProps {
   title: string;
@@ -18,15 +25,30 @@ export function PrintableArticle({
   published_time,
   content,
 }: PrintableArticleProps) {
-  const handlePrint = () => {
-    window.print();
-  };
-
   const { showScrollTop, scrollToTop } = useScrollToTop();
+  const [includeImages, setIncludeImages] = useState(true);
 
   return (
-    <article className="print-article max-w-3xl mx-auto pb-8">
-      <div className="flex justify-end mb-4">
+    <article
+      className={cn(
+        "print-article max-w-3xl mx-auto pb-8",
+        !includeImages && "hide-images"
+      )}
+    >
+      <div className="flex justify-end gap-4 mb-4 print:hidden">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="include-images"
+            checked={includeImages}
+            onCheckedChange={(checked) => setIncludeImages(checked as boolean)}
+          />
+          <Label
+            htmlFor="include-images"
+            className="flex items-center gap-1 cursor-pointer"
+          >
+            Include images
+          </Label>
+        </div>
         <Button onClick={handlePrint}>Print</Button>
       </div>
       <h1 className="text-3xl font-bold mb-4">{title}</h1>

@@ -4,7 +4,7 @@ import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
-import { generateSummaryGemini } from "@/lib/ai";
+import { generateSummaryGpt } from "@/lib/ai";
 import { redirect } from "next/navigation";
 import { shouldResetBillingCycle, SUMMARY_LIMITS } from "@/lib/billing";
 import { PlanType } from "./types";
@@ -169,7 +169,6 @@ export async function createArticleSummary(
     const doc = new JSDOM(html, { url });
     const reader = new Readability(doc.window.document);
     const article = reader.parse();
-    console.log(article);
 
     if (!article) {
       throw new Error("Failed to parse article");
@@ -177,7 +176,7 @@ export async function createArticleSummary(
 
     const wordCount = article.textContent?.trim().split(/\s+/).length || 0;
     const cleanContent = article.textContent?.replace(/\s+/g, " ").trim() || "";
-    const result = await generateSummaryGemini(cleanContent, wordCount);
+    const result = await generateSummaryGpt(cleanContent, wordCount);
 
     // Insert into articles table
     const { data: newArticle, error: articleError } = await supabase

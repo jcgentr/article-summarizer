@@ -1,9 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
 import config from "@/app/config";
 import { GoogleGenAI } from "@google/genai";
+import OpenAI from "openai";
 
 const TOKEN_LIMIT = 50000; // ~37,500 words
 const TOKEN_LIMIT_GEMINI = 1000000; // ~750,000 words
+const TOKEN_LIMIT_GPT = 300000;
 
 export async function generateSummary(content: string, wordCount: number) {
   // Rough token estimation (1 token ≈ 0.75 words)
@@ -107,6 +109,57 @@ export async function generateSummaryGemini(
     // Create and return summary object
     const result = {
       summary: responseText,
+    };
+
+    return result;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`Error generating summary: ${error.message}`);
+    }
+    throw new Error("An unknown error occurred while generating summary");
+  }
+}
+
+export async function generateSummaryGpt(content: string, wordCount: number) {
+  // Rough token estimation (1 token ≈ 0.75 words)
+  const estimatedTokens = Math.ceil(wordCount / 0.75);
+
+  if (estimatedTokens > TOKEN_LIMIT_GPT) {
+    throw new Error(
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT_GPT} tokens.`
+    );
+  }
+
+  const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const messageText = `Please provide a concise summary of this article: ${content}. Limit the summary to one paragraph with 3-4 sentences.`;
+
+  try {
+    const completion = await client.chat.completions.create({
+      model: "gpt-5-nano",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a professional summarizer. Provide clear, concise summaries while maintaining key information. Always respond with valid JSON.",
+        },
+        {
+          role: "user",
+          content: messageText,
+        },
+      ],
+      response_format: { type: "json_object" },
+    });
+
+    const responseText = completion.choices[0]?.message?.content;
+
+    if (!responseText) {
+      throw new Error("No response text received from OpenAI");
+    }
+
+    const responseData = JSON.parse(responseText);
+
+    const result = {
+      summary: responseData.summary,
     };
 
     return result;

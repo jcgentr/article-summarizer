@@ -185,21 +185,10 @@ export async function generateSummaryGroq(content: string, wordCount: number) {
 
   const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-  const messageText = `Please provide a concise summary of this article: ${content}. 
-  
-    Output the response in JSON format. Follow this schema:
-
-  | Column     | Type     | Description          |
-  | ---------- | -------- | -------------------- |
-  | summary    | text     | AI-generated summary |
-
-  Here is an example of the output:
-  {
-      "summary": "This article discusses the impact of artificial intelligence on modern healthcare, focusing on recent breakthroughs in diagnostic imaging and personalized medicine. It explores how machine learning algorithms are improving early disease detection and treatment planning while addressing concerns about data privacy and the doctor-patient relationship.",
-  }
-
-  Limit the summary to one paragraph with 3-4 sentences or shorter if appropriate. 
-  Extract the most important information from the article.`;
+  const messageText = `Please provide a concise summary of this article: ${content}.
+    Limit the summary to one paragraph with 3-4 sentences or shorter if appropriate. 
+    Extract the most important information from the article.
+    Return the summary as a string without any other text or formatting.`;
 
   try {
     const chatCompletion = await groq.chat.completions.create({
@@ -215,6 +204,7 @@ export async function generateSummaryGroq(content: string, wordCount: number) {
         },
       ],
       model: "openai/gpt-oss-20b",
+      response_format: { type: "json_object" },
     });
 
     const responseText = chatCompletion.choices[0]?.message?.content;

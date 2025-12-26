@@ -36,7 +36,6 @@ export function ArticleCard({
   rating,
   tags,
   allTags,
-  formatted_content,
   handleTagClick,
 }: Article & {
   handleTagClick: (tag: string) => void;
@@ -121,7 +120,7 @@ export function ArticleCard({
               )}
             </AnimatePresence>
             <ReadCheckbox id={id} initialReadStatus={has_read} />
-            {formatted_content && <PrintButton id={id} />}
+            <PrintButton id={id} />
             <DeleteButton id={id} />
           </div>
         </div>

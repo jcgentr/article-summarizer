@@ -1,33 +1,62 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useState } from "react";
 import { Feedback } from "../types";
+import { getFeedback } from "./actions";
 
-export const dynamic = "force-dynamic";
+export default function FeedbackPage() {
+  const [password, setPassword] = useState("");
+  const [feedback, setFeedback] = useState<Feedback[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-export default async function FeedbackPage() {
-  const supabase = await createClient();
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const result = await getFeedback(password);
 
-  if (user?.id !== "f9fcfdb3-34dd-44fc-9791-31478c1a3628") {
-    redirect("/");
+    if (result.error) {
+      setError(result.error);
+      setFeedback(null);
+    } else {
+      setFeedback(result.feedback);
+    }
+
+    setLoading(false);
   }
 
-  const { data: feedback, error } = await supabase
-    .from("feedback")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .returns<Feedback[]>();
-
-  console.log(error);
+  if (!feedback) {
+    return (
+      <div className="p-8 max-w-md mx-auto">
+        <h1 className="text-2xl font-bold mb-6">Feedback</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+            className="w-full border rounded-lg px-4 py-2"
+          />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-primary text-primary-foreground rounded-lg px-4 py-2 disabled:opacity-50"
+          >
+            {loading ? "Loading..." : "View Feedback"}
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Feedback</h1>
       <div className="space-y-6">
-        {feedback?.map((item) => (
+        {feedback.map((item) => (
           <div key={item.id} className="border p-4 rounded-lg">
             <div className="flex justify-between items-start">
               <div>
@@ -47,7 +76,7 @@ export default async function FeedbackPage() {
             <p className="mt-2 whitespace-pre-wrap">{item.message}</p>
           </div>
         ))}
-        {!feedback?.length && (
+        {!feedback.length && (
           <p className="text-muted-foreground">No feedback yet.</p>
         )}
       </div>

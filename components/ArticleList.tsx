@@ -2,13 +2,7 @@
 
 import { Article } from "@/app/(protected)/types";
 import { fetchArticles } from "@/app/(protected)/fetch-articles";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { ArrowUp, Loader2 } from "lucide-react";
@@ -51,8 +45,9 @@ export function ArticleList({
 
   const virtualizer = useWindowVirtualizer({
     count: articles.length,
-    estimateSize: () => 350,
-    overscan: 3,
+    estimateSize: () => 300,
+    overscan: 5,
+    gap: 16,
     scrollMargin: listRef.current?.offsetTop ?? 0,
   });
 
@@ -157,7 +152,7 @@ export function ArticleList({
           loadMore();
         }
       },
-      { rootMargin: "200px" }
+      { rootMargin: "200px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -170,12 +165,12 @@ export function ArticleList({
         <div className="flex mt-4 gap-3 items-baseline">
           <Input
             type="search"
-            placeholder="Search by title, author, or URL..."
+            placeholder="Search articles..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full"
           />
-          <div className="text-sm text-muted-foreground flex-shrink-0">
+          <div className="text-sm text-muted-foreground shrink-0">
             {isPending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
@@ -225,7 +220,7 @@ export function ArticleList({
                   transform: `translateY(${virtualItem.start - virtualizer.options.scrollMargin}px)`,
                 }}
               >
-                <div className="pb-4">
+                <div>
                   <ArticleCard
                     {...article}
                     handleTagClick={(tag: string) =>

@@ -117,7 +117,7 @@ function Signup() {
           onClick={handleGoogleSignup}
           disabled={loadingProvider !== null}
         >
-          <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
+          <FcGoogle className="mr-2 h-4 w-4 shrink-0" />
           {loadingProvider === "google"
             ? "Signing up with Google..."
             : "Sign up with Google"}
@@ -128,7 +128,7 @@ function Signup() {
           onClick={handleGithubSignup}
           disabled={loadingProvider !== null}
         >
-          <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
+          <FaGithub className="mr-2 h-4 w-4 shrink-0" />
           {loadingProvider === "github"
             ? "Signing up with GitHub..."
             : "Sign up with GitHub"}

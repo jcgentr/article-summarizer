@@ -21,24 +21,24 @@ import { Article } from "@/app/(protected)/types";
 export const FILTER_OPTIONS = {
   none: {
     label: "None",
-    icon: <CircleOff className="h-4 w-4 flex-shrink-0" />,
+    icon: <CircleOff className="h-4 w-4 shrink-0" />,
     filter: (articles: Article[]) => articles,
   },
   read: {
     label: "Read",
-    icon: <BookOpenCheck className="h-4 w-4 flex-shrink-0" />,
+    icon: <BookOpenCheck className="h-4 w-4 shrink-0" />,
     filter: (articles: Article[]) =>
       articles.filter((article) => article.has_read),
   },
   unread: {
     label: "Unread",
-    icon: <BookOpen className="h-4 w-4 flex-shrink-0" />,
+    icon: <BookOpen className="h-4 w-4 shrink-0" />,
     filter: (articles: Article[]) =>
       articles.filter((article) => !article.has_read),
   },
   "under-5-min": {
     label: "< 5 min read",
-    icon: <Timer className="h-4 w-4 flex-shrink-0" />,
+    icon: <Timer className="h-4 w-4 shrink-0" />,
     filter: (articles: Article[]) =>
       articles.filter((article) => (article.read_time || 0) < 5),
   },

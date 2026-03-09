@@ -14,7 +14,7 @@ export default function PublicLayout({
           <h2 className="flex items-center">
             <Image
               src={gistrLogo}
-              className="mr-1 flex-shrink-0"
+              className="mr-1 shrink-0"
               alt="Gistr Logo"
               width="48"
               height="48"

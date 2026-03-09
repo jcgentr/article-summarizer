@@ -86,7 +86,7 @@ export async function fetchArticles({
 
   // Under 5 min read filter (238 wpm * 5 = 1190 words)
   if (filter === "under-5-min") {
-    query = query.lt("word_count" as string, 1190);
+    query = query.lt("articles.word_count" as string, 1190);
   }
 
   // Sort
@@ -95,15 +95,13 @@ export async function fetchArticles({
       query = query.order("created_at", { ascending: true });
       break;
     case "Shortest first":
-      query = query.order("word_count", {
+      query = query.order("article(word_count)" as string, {
         ascending: true,
-        referencedTable: "articles",
       });
       break;
     case "Longest first":
-      query = query.order("word_count", {
+      query = query.order("article(word_count)" as string, {
         ascending: false,
-        referencedTable: "articles",
       });
       break;
     default: // Newest first

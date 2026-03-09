@@ -116,7 +116,7 @@ function Login() {
           onClick={handleGoogleLogin}
           disabled={loadingProvider !== null}
         >
-          <FcGoogle className="mr-2 h-4 w-4 flex-shrink-0" />
+          <FcGoogle className="mr-2 h-4 w-4 shrink-0" />
           {loadingProvider === "google"
             ? "Logging in with Google..."
             : "Log in with Google"}
@@ -127,7 +127,7 @@ function Login() {
           onClick={handleGithubLogin}
           disabled={loadingProvider !== null}
         >
-          <FaGithub className="mr-2 h-4 w-4 flex-shrink-0" />
+          <FaGithub className="mr-2 h-4 w-4 shrink-0" />
           {loadingProvider === "github"
             ? "Logging in with GitHub..."
             : "Log in with GitHub"}

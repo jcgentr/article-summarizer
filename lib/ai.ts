@@ -15,7 +15,7 @@ export async function generateSummary(content: string, wordCount: number) {
 
   if (estimatedTokens > TOKEN_LIMIT) {
     throw new Error(
-      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`,
     );
   }
 
@@ -75,14 +75,14 @@ export async function generateSummary(content: string, wordCount: number) {
 
 export async function generateSummaryGemini(
   content: string,
-  wordCount: number
+  wordCount: number,
 ) {
   // Rough token estimation (1 token ≈ 0.75 words)
   const estimatedTokens = Math.ceil(wordCount / 0.75);
 
   if (estimatedTokens > TOKEN_LIMIT_GEMINI) {
     throw new Error(
-      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT} tokens.`,
     );
   }
 
@@ -128,12 +128,15 @@ export async function generateSummaryGpt(content: string, wordCount: number) {
 
   if (estimatedTokens > TOKEN_LIMIT_GPT) {
     throw new Error(
-      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT_GPT} tokens.`
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT_GPT} tokens.`,
     );
   }
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-  const messageText = `Please provide a concise summary of this article: ${content}. Limit the summary to one paragraph with 3-4 sentences.`;
+  const messageText = `Summarize this article in one paragraph (3-5 sentences). Cover: the main argument or thesis, the key supporting points or findings, and the practical takeaway for the reader. Be specific — use concrete details from the article rather than vague generalities. Write in a neutral, informative tone.
+
+Article:
+${content}`;
 
   try {
     const completion = await client.chat.completions.create({
@@ -142,14 +145,28 @@ export async function generateSummaryGpt(content: string, wordCount: number) {
         {
           role: "system",
           content:
-            "You are a professional summarizer. Provide clear, concise summaries while maintaining key information. Always respond with valid JSON.",
+            "You summarize articles for a reading list app. Summaries should help users quickly decide if an article is worth reading in full. Be specific and information-dense.",
         },
         {
           role: "user",
           content: messageText,
         },
       ],
-      response_format: { type: "json_object" },
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "article_summary",
+          strict: true,
+          schema: {
+            type: "object",
+            properties: {
+              summary: { type: "string" },
+            },
+            required: ["summary"],
+            additionalProperties: false,
+          },
+        },
+      },
     });
 
     const responseText = completion.choices[0]?.message?.content;
@@ -160,11 +177,7 @@ export async function generateSummaryGpt(content: string, wordCount: number) {
 
     const responseData = JSON.parse(responseText);
 
-    const result = {
-      summary: responseData.summary,
-    };
-
-    return result;
+    return { summary: responseData.summary };
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(`Error generating summary: ${error.message}`);
@@ -179,16 +192,16 @@ export async function generateSummaryGroq(content: string, wordCount: number) {
 
   if (estimatedTokens > TOKEN_LIMIT_GROQ) {
     throw new Error(
-      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT_GROQ} tokens.`
+      `Content is too long (estimated ${estimatedTokens} tokens). Maximum allowed is ${TOKEN_LIMIT_GROQ} tokens.`,
     );
   }
 
   const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-  const messageText = `Please provide a concise summary of this article: ${content}.
-    Limit the summary to one paragraph with 3-4 sentences or shorter if appropriate. 
-    Extract the most important information from the article.
-    Return the summary as a string without any other text or formatting.`;
+  const messageText = `Summarize this article in 2-3 sentences. State the core point upfront, then add one or two key details. Keep it plain and direct. No em dashes. No filler.
+
+Article:
+${content}`;
 
   try {
     const chatCompletion = await groq.chat.completions.create({
@@ -196,15 +209,29 @@ export async function generateSummaryGroq(content: string, wordCount: number) {
         {
           role: "system",
           content:
-            "You are a professional summarizer. Provide clear, concise summaries while maintaining key information. Always respond with valid JSON.",
+            "You write short, plain-language summaries that capture the gist of an article. Prioritize the main takeaway over exhaustive coverage. Never use em dashes.",
         },
         {
           role: "user",
           content: messageText,
         },
       ],
-      model: "openai/gpt-oss-20b",
-      response_format: { type: "json_object" },
+      model: "openai/gpt-oss-120b",
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "article_summary",
+          strict: true,
+          schema: {
+            type: "object",
+            properties: {
+              summary: { type: "string" },
+            },
+            required: ["summary"],
+            additionalProperties: false,
+          },
+        },
+      },
     });
 
     const responseText = chatCompletion.choices[0]?.message?.content;
@@ -213,17 +240,9 @@ export async function generateSummaryGroq(content: string, wordCount: number) {
       throw new Error("No response text received from Groq");
     }
 
-    console.log(responseText);
-
     const responseData = JSON.parse(responseText);
 
-    console.log(responseData);
-
-    const result = {
-      summary: responseData.summary,
-    };
-
-    return result;
+    return { summary: responseData.summary };
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error(`Error generating summary: ${error.message}`);
@@ -242,7 +261,7 @@ export interface ModelBenchmarkResult {
 
 export async function benchmarkAllModels(
   content: string,
-  wordCount: number
+  wordCount: number,
 ): Promise<ModelBenchmarkResult[]> {
   const results: ModelBenchmarkResult[] = [];
   const models = [

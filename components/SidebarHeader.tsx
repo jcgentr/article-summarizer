@@ -23,7 +23,7 @@ export function SidebarHeader() {
         >
           <Image
             src={gistrLogo}
-            className="mr-1 flex-shrink-0"
+            className="mr-1 shrink-0"
             alt="Gistr Logo"
             width="32"
             height="32"

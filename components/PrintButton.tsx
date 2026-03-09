@@ -23,7 +23,7 @@ export function PrintButton({ id }: PrintButtonProps) {
               size="sm"
               className="flex items-center gap-1"
             >
-              <PrinterIcon className="h-4 w-4 flex-shrink-0" />
+              <PrinterIcon className="h-4 w-4 shrink-0" />
             </Button>
           </Link>
         </TooltipTrigger>

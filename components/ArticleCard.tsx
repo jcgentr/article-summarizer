@@ -59,13 +59,13 @@ export function ArticleCard({
         <div className="flex justify-between gap-2 flex-wrap">
           {author && (
             <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1">
-              <User className="h-4 w-4 flex-shrink-0" />
+              <User className="h-4 w-4 shrink-0" />
               {author}
             </p>
           )}
           {published_time && (
             <p className="pt-2 text-sm text-muted-foreground flex items-center gap-1 ml-auto">
-              <Calendar className="h-4 w-4 flex-shrink-0" />
+              <Calendar className="h-4 w-4 shrink-0" />
               {new Date(published_time).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",
@@ -89,24 +89,24 @@ export function ArticleCard({
           </AccordionItem>
         </Accordion>
 
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+        <div className="flex flex-wrap items-center gap-4 justify-between">
           <div className="flex gap-2">
             <Badge
               variant="secondary"
-              className="flex items-center gap-1 px-4 py-2"
+              className="flex items-center gap-1 px-4 py-2 whitespace-nowrap"
             >
-              <MessageSquare className="h-4 w-4 flex-shrink-0" />
+              <MessageSquare className="h-4 w-4 shrink-0" />
               {word_count.toLocaleString("en-US")} words
             </Badge>
             <Badge
               variant="secondary"
-              className="flex items-center gap-1 px-4 py-2"
+              className="flex items-center gap-1 px-4 py-2 whitespace-nowrap"
             >
-              <Clock className="h-4 w-4 flex-shrink-0" />
+              <Clock className="h-4 w-4 shrink-0" />
               {read_time} min read
             </Badge>
           </div>
-          <div className="flex items-center gap-4 justify-end">
+          <div className="flex items-center gap-4">
             <AnimatePresence>
               {has_read && (
                 <motion.div

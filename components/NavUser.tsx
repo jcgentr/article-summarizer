@@ -52,7 +52,7 @@ export function NavUser({ email, userId }: NavUserProps) {
   const { setOpenMobile } = useSidebar();
 
   const [metadata, setMetadata] = useState<typeof DEFAULT_USER_METADATA>(
-    DEFAULT_USER_METADATA
+    DEFAULT_USER_METADATA,
   );
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export function NavUser({ email, userId }: NavUserProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton>
-          <User className="h-5 w-5 flex-shrink-0" />
+          <User className="h-5 w-5 shrink-0" />
           <span className="truncate">{email}</span>
           <ChevronUp className="ml-auto" />
         </SidebarMenuButton>
@@ -111,7 +111,7 @@ export function NavUser({ email, userId }: NavUserProps) {
               className="flex items-center cursor-pointer"
               onClick={handleMenuItemClick}
             >
-              <Settings className="h-5 w-5 mr-1 flex-shrink-0" />
+              <Settings className="h-5 w-5 mr-1 shrink-0" />
               Account
             </Link>
           </DropdownMenuItem>
@@ -129,7 +129,7 @@ export function NavUser({ email, userId }: NavUserProps) {
                   }}
                 >
                   <button className="w-full flex items-center cursor-pointer">
-                    <Sparkles className="h-5 w-5 mr-1 flex-shrink-0" />
+                    <Sparkles className="h-5 w-5 mr-1 shrink-0" />
                     Upgrade to Pro
                   </button>
                 </DropdownMenuItem>
@@ -150,7 +150,7 @@ export function NavUser({ email, userId }: NavUserProps) {
                   }}
                 >
                   <button className="w-full flex items-center cursor-pointer">
-                    <CreditCard className="h-5 w-5 mr-1 flex-shrink-0" />
+                    <CreditCard className="h-5 w-5 mr-1 shrink-0" />
                     Billing
                   </button>
                 </DropdownMenuItem>
@@ -167,7 +167,7 @@ export function NavUser({ email, userId }: NavUserProps) {
               className="flex items-center cursor-pointer"
               onClick={handleMenuItemClick}
             >
-              <Chrome className="h-5 w-5 mr-1 flex-shrink-0" />
+              <Chrome className="h-5 w-5 mr-1 shrink-0" />
               Chrome Extension
             </Link>
           </DropdownMenuItem>
@@ -182,7 +182,7 @@ export function NavUser({ email, userId }: NavUserProps) {
           >
             <FeedbackForm>
               <div className="w-full flex items-center cursor-pointer gap-2">
-                <MessageSquare className="h-4 w-4 mr-1 flex-shrink-0" />
+                <MessageSquare className="h-4 w-4 mr-1 shrink-0" />
                 Give Feedback
               </div>
             </FeedbackForm>
@@ -198,7 +198,7 @@ export function NavUser({ email, userId }: NavUserProps) {
             }}
           >
             <button className="w-full cursor-pointer">
-              <LogOut className="h-5 w-5 mr-1 flex-shrink-0" />
+              <LogOut className="h-5 w-5 mr-1 shrink-0" />
               Log out
             </button>
           </DropdownMenuItem>

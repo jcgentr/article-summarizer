@@ -41,7 +41,7 @@ function URLInput() {
     <Input
       type="url"
       name="url"
-      placeholder="Enter article URL"
+      placeholder="Paste an article link to summarize"
       required
       disabled={pending}
     />

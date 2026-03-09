@@ -4,7 +4,6 @@ import { Article } from "@/app/(protected)/types";
 import { fetchArticles } from "@/app/(protected)/fetch-articles";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { ArrowUp, Loader2 } from "lucide-react";
 import { AddForm } from "./AddForm";
 import { ArticleCard } from "./ArticleCard";
@@ -38,18 +37,9 @@ export function ArticleList({
   const debouncedSearch = useDebouncedValue(searchTerm, 300);
   const { showScrollTop, scrollToTop } = useScrollToTop();
   const loadMoreRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
   const hasMounted = useRef(false);
 
   const hasMore = articles.length < totalCount;
-
-  const virtualizer = useWindowVirtualizer({
-    count: articles.length,
-    estimateSize: () => 300,
-    overscan: 5,
-    gap: 16,
-    scrollMargin: listRef.current?.offsetTop ?? 0,
-  });
 
   // Refetch when search/filter/sort changes (skip initial mount)
   useEffect(() => {
@@ -198,40 +188,17 @@ export function ArticleList({
           No articles found
         </p>
       ) : (
-        <div
-          ref={listRef}
-          style={{
-            height: `${virtualizer.getTotalSize()}px`,
-            position: "relative",
-          }}
-        >
-          {virtualizer.getVirtualItems().map((virtualItem) => {
-            const article = articles[virtualItem.index];
-            return (
-              <div
-                key={article.id}
-                data-index={virtualItem.index}
-                ref={virtualizer.measureElement}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  transform: `translateY(${virtualItem.start - virtualizer.options.scrollMargin}px)`,
-                }}
-              >
-                <div>
-                  <ArticleCard
-                    {...article}
-                    handleTagClick={(tag: string) =>
-                      router.push(`/tags/${encodeURIComponent(tag)}`)
-                    }
-                    allTags={allTags}
-                  />
-                </div>
-              </div>
-            );
-          })}
+        <div className="flex flex-col gap-4">
+          {articles.map((article) => (
+            <ArticleCard
+              key={article.id}
+              {...article}
+              handleTagClick={(tag: string) =>
+                router.push(`/tags/${encodeURIComponent(tag)}`)
+              }
+              allTags={allTags}
+            />
+          ))}
         </div>
       )}
 
